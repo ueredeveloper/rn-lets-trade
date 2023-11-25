@@ -13,16 +13,16 @@ export default function App() {
 
   //client.time().then(time => console.warn(time));
 
-  (async()=>{
-    console.log(await client.candles({ symbol: 'ETHBTC', interval: '1d', limit: 2 }))
-  });
+  const loadCandle = async ()=>{
+    console.log(await client.candles({ symbol: 'BTCUSDT', interval: '1d', limit: 2 }))
+  }
 
+  loadCandle();
 
-  
 
   return (
     <View style={styles.container}>
-     
+     <Text>Hello world!</Text>
     </View>
   );
 }
