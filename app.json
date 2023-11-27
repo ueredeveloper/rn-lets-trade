@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "6ea3da2c-c733-45e4-946e-8d8062e284fc"
+      }
+    },
+    "owner": "ueredeveloper"
   }
 }
