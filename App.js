@@ -22,7 +22,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-     <Text>Hello world!</Text>
+     <Text>Hello world With GitHub Space</Text>
     </View>
   );
 }
