@@ -1,7 +1,9 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { StyleSheet, Text, View, ScrollView, Button, Alert } from "react-native";
 import Binance from 'binance-api-react-native';
 import {BINANCE_API_KEY, BINANCE_SECRECT_KEY} from "@env";
+
+let i = 0;
 
 export default function App() {
 
@@ -19,10 +21,13 @@ export default function App() {
 
   loadCandle();
 
-
+ 
   return (
     <View style={styles.container}>
      <Text>Hello world With GitHub Space</Text>
+     <Button
+        title="Press me"
+        onPress={() => Alert.alert('Simple Button pressed: '+ i++)}/>
     </View>
   );
 }
