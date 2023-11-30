@@ -1,5 +1,5 @@
-import ListCoins from "./ListCoins";
+import ListCoinsPricePair from "./ListCoinsPricePair";
 import SettingsView from "./SettingsView";
 
 
-export {ListCoins, SettingsView}
+export {ListCoinsPricePair, SettingsView}

@@ -1,8 +1,9 @@
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
-import { ListCoins, SettingsView } from '../components';
+import { ListCoinsPricePair, SettingsView } from '../components';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import FavoriteScreen from './FavoritesScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -13,10 +14,13 @@ function HomeScreen({ navigation }) {
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName;
 
-                    if (route.name === 'ListCoins') {
+                    if (route.name === 'List Coins') {
                         iconName = focused ? 'home-outline' : 'home';
-                    } else if (route.name === 'SettingsView') {
+                    } else if (route.name === 'Settings View') {
                         iconName = focused ? 'settings-outline' : 'settings';
+                    }
+                    else if (route.name === 'Favorites') {
+                        iconName = focused ? 'bookmark-outline' : 'bookmark';
                     }
 
                     // You can return any component that you like here!
@@ -26,8 +30,9 @@ function HomeScreen({ navigation }) {
                 tabBarInactiveTintColor: 'gray',
                 headerShown: false,
             })}>
-            <Tab.Screen name="ListCoins" component={ListCoins} />
-            <Tab.Screen name="SettingsView" component={SettingsView} />
+            <Tab.Screen name="Favorites" component={FavoriteScreen} />
+            <Tab.Screen name="List Coins" component={ListCoinsPricePair} />
+            <Tab.Screen name="Settings View" component={SettingsView} />
         </Tab.Navigator>
     );
 }
