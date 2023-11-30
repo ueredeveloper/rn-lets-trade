@@ -13,11 +13,14 @@ export default function App() {
 
   //client.time().then(time => console.warn(time));
 
-  const loadCandle = async ()=>{
+  /*const loadCandle = async ()=>{
     console.log(await client.candles({ symbol: 'BTCUSDT', interval: '1d', limit: 2 }))
   }
 
-  loadCandle();
+  loadCandle();*/
+  const getAllPrices = async ()=> {
+    console.log(await client.prices())
+  }
 
 
   return (
