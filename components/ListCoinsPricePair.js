@@ -21,6 +21,7 @@ const ListCoinsPricePair = () => {
     apiSecret: BINANCE_SECRECT_KEY,
   });
 
+  
 
   useEffect(() => {
     const fetchPrices = async () => {

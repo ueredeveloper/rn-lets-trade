@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { colors } from '../colors';
 
+
 const CoinPricePair = ({ pair, price }) => (
   <View style={styles.container}>
     <Text style={styles.text}>{pair}</Text>
