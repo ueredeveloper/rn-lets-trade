@@ -9,7 +9,8 @@ import {
 } from 'react-native';
 import { CoinPricePair } from './CoinPricePair';
 import Binance from 'binance-api-react-native';
-import {BINANCE_API_KEY, BINANCE_SECRECT_KEY} from "@env";
+import { BINANCE_API_KEY, BINANCE_SECRECT_KEY } from "@env";
+import CoinAccordion from './CoinAccordion';
 
 const ListCoinsPricePair = () => {
 
@@ -21,7 +22,7 @@ const ListCoinsPricePair = () => {
     apiSecret: BINANCE_SECRECT_KEY,
   });
 
-  
+
 
   useEffect(() => {
     const fetchPrices = async () => {
@@ -42,14 +43,8 @@ const ListCoinsPricePair = () => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={prices}
-        renderItem={({ item }) => (
-          <CoinPricePair pair={item.pair} price={item.price} />
-        )}
-        keyExtractor={(item) => item.pair + item.price}
-      />
+    <SafeAreaView>
+      <CoinAccordion listPrices={prices} />
     </SafeAreaView>
   );
 };
