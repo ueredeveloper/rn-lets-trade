@@ -4,6 +4,7 @@ import CoinInfo from './CoinInfo';
 import CustomAnimatedAccordion from './CustomAnimatedAccordion';
 
 const FlatListCoins = ({ listCoins }) => {
+    
 
     const renderAccordionItem = ({ item }) => (
         <>

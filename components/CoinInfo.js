@@ -4,6 +4,7 @@ import { List } from 'react-native-paper';
 
 
 const CoinInfo = ({ pair, price }) => {
+    
     return (
         <View style={styles.container}>
             <Text style={styles.text}> {pair}</Text>

@@ -3,3 +3,4 @@ import SettingsView from "./SettingsView";
 
 
 export {ListCoinsPricePair, SettingsView}
+

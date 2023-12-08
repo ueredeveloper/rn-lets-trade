@@ -13,6 +13,7 @@ import { calculateBollingerBands } from '../utilities/calculateBollingerBands';
 import { fetchCandles } from '../services/fetchCandles';
 
 const BBLineChart = ({symbol}) => {
+  
 
   /*const [candles, setCandles] = useState([]);
   const [bollingerBands, setBollingerBands] = useState([]);

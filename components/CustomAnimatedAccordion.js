@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import BBLineChart from './BBLineChart';
 
 const CustomAnimatedAccordion = ({symbol}) => {
+    
 
     const [expanded, setExpanded] = useState(false);
     const [animation, setAnimation] = useState(new Animated.Value(0));

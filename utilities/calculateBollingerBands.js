@@ -8,6 +8,7 @@ const calculateBollingerBands = (period, values) => {
         stdDev: 2
     }
     return BB.calculate(input)
+    
 
 }
 

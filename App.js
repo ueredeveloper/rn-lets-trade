@@ -6,6 +6,7 @@ import { BrowserScreen, HomeScreen } from './screens';
 
 const Stack = createStackNavigator();
 
+
 function MyStack() {
   return (
     <Stack.Navigator>
@@ -14,6 +15,7 @@ function MyStack() {
     </Stack.Navigator>
   );
 }
+
 
 export default function App() {
 
