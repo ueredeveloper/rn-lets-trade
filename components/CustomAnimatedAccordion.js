@@ -7,8 +7,9 @@ import {
     Text,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import BBLineChart from './BBLineChart';
 
-const CustomAnimatedAccordion = () => {
+const CustomAnimatedAccordion = ({symbol}) => {
 
     const [expanded, setExpanded] = useState(false);
     const [animation, setAnimation] = useState(new Animated.Value(0));
@@ -44,13 +45,9 @@ const CustomAnimatedAccordion = () => {
     };
 
     return (
-        <View style={styles.container}>
-            <TouchableOpacity onPress={toggleAccordion}>
-                <View
-                    style={[
-                        styles.titleContainer,
-                        { backgroundColor: 'red' },
-                    ]}>
+        <View>
+            <TouchableOpacity style={styles.button} onPress={toggleAccordion}>
+                <View>
                     <Icon
                         name={expanded ? 'expand-less' : 'expand-more'}
                         size={20}
@@ -60,9 +57,7 @@ const CustomAnimatedAccordion = () => {
             </TouchableOpacity>
             {expanded ? (
                 <Animated.View style={[styles.content, animatedStyle]}>
-                    <View>
-                        <Text> My Chart</Text>
-                    </View>
+                    <BBLineChart symbol={symbol}/>
                 </Animated.View>
 
             ) : (<View></View>)}
@@ -74,7 +69,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-
+    button: {
+        backgroundColor: '#DDDDDD',
+        padding: 5
+    },
     content: {
         backgroundColor: '#F0F0F0',
         borderRadius: 0,

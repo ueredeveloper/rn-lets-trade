@@ -8,7 +8,7 @@ const FlatListCoins = ({ listCoins }) => {
     const renderAccordionItem = ({ item }) => (
         <>
             <CoinInfo pair={item.pair} price={item.price} />
-            <CustomAnimatedAccordion />
+            <CustomAnimatedAccordion symbol={item.pair} />
         </>
     );
 

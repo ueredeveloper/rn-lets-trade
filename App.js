@@ -16,6 +16,8 @@ function MyStack() {
 }
 
 export default function App() {
+
+  //calculate(14)
   
   return (
     <NavigationContainer>

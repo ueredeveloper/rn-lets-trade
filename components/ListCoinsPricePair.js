@@ -7,35 +7,25 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
-import Binance from 'binance-api-react-native';
-import { BINANCE_API_KEY, BINANCE_SECRECT_KEY } from "@env";
 import FlatListCoins from './FlatListCoins';
+import { fetchAllCoins } from '../services/fetchAllCoins';
+
 
 const ListCoinsPricePair = () => {
 
   const [listCoins, setListCoins] = useState([]);
 
-  const client = Binance({
-    apiKey: BINANCE_API_KEY,
-    apiSecret: BINANCE_SECRECT_KEY,
-  });
-
   useEffect(() => {
-    const fetchPrices = async () => {
-      try {
-        const prices = await client.prices();
-        // Convert object to array of objects
-        const _listCoins = Object.entries(prices).map(([pair, price]) => ({
-          pair: pair,
-          price: price,
-        }));
-        setListCoins(_listCoins); // Update coins state with the fetched data
-      } catch (error) {
-        console.error('Error fetching prices:', error);
-      }
-    };
 
-    fetchPrices();
+    (async () => {
+      try {
+        const listCoins = await fetchAllCoins(); // Replace with your actual method
+        setListCoins(listCoins);
+      } catch (error) {
+        console.error('Error fetching coins:', error);
+      }
+    })();
+
   }, []);
 
   return (
