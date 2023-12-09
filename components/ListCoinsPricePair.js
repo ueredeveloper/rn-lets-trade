@@ -1,40 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import {
-  SafeAreaView,
-  View,
-  FlatList,
-  StyleSheet,
-  Text,
-  StatusBar,
-} from 'react-native';
+import { SafeAreaView, StatusBar, StyleSheet, Text } from 'react-native';
 import FlatListCoins from './FlatListCoins';
 import { fetchAllCoins } from '../services/fetchAllCoins';
+import SearchCoins from './SearchCoins';
 
-
-
-const ListCoinsPricePair = () => {
-
+const ListCoinsPricePair = React.memo(() => {
   const [listCoins, setListCoins] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-
-    (async () => {
+    const fetchCoins = async () => {
       try {
-        const listCoins = await fetchAllCoins(); // Replace with your actual method
-        setListCoins(listCoins);
+        const fetchedCoins = await fetchAllCoins();
+        setListCoins(fetchedCoins);
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching coins:', error);
+        setLoading(false);
       }
-    })();
+    };
 
+    fetchCoins();
   }, []);
 
   return (
-    <SafeAreaView>
-      <FlatListCoins listCoins={listCoins} />
+    <SafeAreaView style={styles.container}>
+      <SearchCoins/>
+      {loading ? (
+        /* Show a loading indicator here if needed */
+        <Text>Loading...</Text>
+      ) : (
+        <FlatListCoins listCoins={listCoins} />
+      )}
     </SafeAreaView>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
