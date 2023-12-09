@@ -6,6 +6,4 @@ function BrowserScreen() {
         <View><Text>Browser Screen</Text></View>
     )
 }
-
-
 export default BrowserScreen;

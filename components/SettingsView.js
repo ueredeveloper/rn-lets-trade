@@ -9,6 +9,4 @@ function SettingsView({ navigation }) {
     )
 }
 
-
-
 export default SettingsView;

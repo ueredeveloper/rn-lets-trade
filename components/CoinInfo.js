@@ -13,6 +13,7 @@ const CoinInfo = ({ pair, price }) => {
     );
 };
 
+
 const styles = StyleSheet.create({
 
     container: {

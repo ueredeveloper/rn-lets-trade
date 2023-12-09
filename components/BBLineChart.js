@@ -87,7 +87,8 @@ const BBLineChart = ({ symbol }) => {
       middle: [0, 0, 0, 0, 0, 0],
       lower: [0, 0, 0, 0, 0, 0]
     }
-  })
+  });
+  
 
   useEffect(() => {
     (async () => {

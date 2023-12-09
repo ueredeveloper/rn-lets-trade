@@ -12,6 +12,7 @@ const FlatListCoins = ({ listCoins }) => {
             <CustomAnimatedAccordion symbol={item.pair} />
         </>
     );
+    
 
     return (
         <FlatList

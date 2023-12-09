@@ -40,6 +40,7 @@ const ListCoinsPricePair = React.memo(() => {
   );
 });
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

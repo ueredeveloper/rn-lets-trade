@@ -9,6 +9,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import BBLineChart from './BBLineChart';
 
+
 const CustomAnimatedAccordion = ({symbol}) => {
     
 
