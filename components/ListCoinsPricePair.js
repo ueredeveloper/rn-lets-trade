@@ -3,6 +3,8 @@ import { SafeAreaView, StatusBar, StyleSheet, Text } from 'react-native';
 import FlatListCoins from './FlatListCoins';
 import { fetchAllCoins } from '../services/fetchAllCoins';
 import SearchCoins from './SearchCoins';
+import Intervals from './Intervals'
+import Pairs from './Pairs';
 
 const ListCoinsPricePair = React.memo(() => {
   const [listCoins, setListCoins] = useState([]);
@@ -25,6 +27,8 @@ const ListCoinsPricePair = React.memo(() => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Intervals/>
+      <Pairs/>
       <SearchCoins/>
       {loading ? (
         /* Show a loading indicator here if needed */
@@ -39,7 +43,7 @@ const ListCoinsPricePair = React.memo(() => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
+   //marginTop: StatusBar.currentHeight || 0,
   },
 });
 

@@ -24,16 +24,18 @@ function SearchCoins() {
 }
 const styles = StyleSheet.create({
     container: {
+        marginTop: 10, 
+        marginBottom: 10,
         flexDirection: 'row',
         alignItems: 'center',
    
     },
     input: {
         flex: 2,
-
-       
-        borderWidth: 1,
-        padding: 10, // distância da letra para a parte esquerda da tela*/
+        borderRadius: 5,
+       marginLeft: 5, marginRight: 5,
+        borderWidth: 0.5,
+        padding: 5, // distância da letra para a parte esquerda da tela*/
     },
     button: {
         marginLeft: 10,

@@ -78,6 +78,7 @@ const BBLineChart = ({ symbol }) => {
   const [chartData, setChartData] = useState({
     labels: ['', '', '', '', '', ''],
     candles: {
+      // change to closedCandles and lastCandles, ou closeList e lastList
       closed: [0, 0, 0, 0, 0, 0],
       last: [0, 0, 0, 0, 0, 0]
     },
