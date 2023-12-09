@@ -12,8 +12,8 @@ import { calculateBollingerBands } from '../utilities/calculateBollingerBands';
 
 import { fetchCandles } from '../services/fetchCandles';
 
-const BBLineChart = ({symbol}) => {
-  
+const BBLineChart = ({ symbol }) => {
+
 
   /*const [candles, setCandles] = useState([]);
   const [bollingerBands, setBollingerBands] = useState([]);
@@ -21,48 +21,48 @@ const BBLineChart = ({symbol}) => {
   const [candlesClosed, setCandlesClosed] = useState([]);
   const [lastCandlesClosed, setLastCandlesClosed] = useState([]);*/
 
-  const [data, setData] = useState({
+  const [chartData, setChartData] = useState({
     labels: ['', '', '', '', '', ''],
-    candles: [0, 0, 0, 0, 0, 0],
+    candles: {
+      closed: [0, 0, 0, 0, 0, 0],
+      last: [0, 0, 0, 0, 0, 0]
+    },
     bollingerBands: {
       upper: [0, 0, 0, 0, 0, 0],
       middle: [0, 0, 0, 0, 0, 0],
-      lower:[0, 0, 0, 0, 0, 0],
-    },
-    closedCandles: [0, 0, 0, 0, 0, 0],
-    lastCandles: [0, 0, 0, 0, 0, 0],
+      lower: [0, 0, 0, 0, 0, 0]
+    }
   })
 
   useEffect(() => {
     (async () => {
       try {
-        await fetchCandles(symbol, 36, '1h')
+        await fetchCandles(symbol, 36, '1d')
           .then(candles => {
 
             let labels = candles.map((item) =>
               new Date(item.closeTime).getHours()
             );
-            let closedCandles = candles.map((item) => parseFloat(item.close));
+            let closed = candles.map((item) => parseFloat(item.close));
 
-            let bb = calculateBollingerBands(14, closedCandles);
+            let bb = calculateBollingerBands(8, closed);
 
             let bollingerBands = {
               upper: bb.map((item) => item.upper),
-              middle: bb.map(item=> item.middle),
-              lower: bb.map(item=>item.lower)
+              middle: bb.map(item => item.middle),
+              lower: bb.map(item => item.lower)
             }
-
-            let lastCandles = closedCandles.filter(
-              (item, i) => i > closedCandles.length - bollingerBands.length - 1
-            );
-
-            setData({
+            // Busca últimos componentes da array `candles` para comparar com as bollinger bands no chart
+            let last = closed.slice(-bollingerBands.upper.length);
+      
+            setChartData({
               labels: labels,
-              candles: candles,
+              candles: {
+                closed: closed,
+                last: last
+              },
               bollingerBands: bollingerBands,
-              closedCandles: closedCandles,
-              lastCandles: lastCandles
-            })
+            });
 
           });
 
@@ -70,39 +70,37 @@ const BBLineChart = ({symbol}) => {
         console.error('Error fetching candles:', error);
       }
     })();
-
-    console.log(data.bollingerBands)
-  });
+  }, []);
 
   return (
     <View>
       <Text>Bezier Line Chart</Text>
       <LineChart
         data={{
-          labels: data.labels,
+          labels: chartData.labels,
           datasets: [
             {
-              data: data.bollingerBands.lower,
-              color: (opacity = 1) => `rgba(0,0,255, ${opacity})`, // optional
-              strokeWidth: 4, // optional
+              data: chartData.bollingerBands.upper,
+              color: (opacity = 1) => `rgba(41,98,255, 1)`,
+              strokeWidth: 2,
             },
             {
-              data: data.bollingerBands.middle,
-              color: (opacity = 1) => `rgba(106,90,205, ${opacity})`, // optional
-              strokeWidth: 4, // optional
+              data: chartData.bollingerBands.middle,
+              color: (opacity = 1) => `rgba(255,109,0, 1)`,
+              strokeWidth: 2,
             },
             {
-              data: data.bollingerBands.lower,
-              color: (opacity = 1) => `rgba(0,0,255, ${opacity})`, // optional
-              strokeWidth: 4, // optional
+              data: chartData.bollingerBands.lower,
+              color: (opacity = 1) => `rgba(41,98,255, 1)`,
+              strokeWidth: 2,
             },
             {
-              data: data.lastCandles,
-              color: (opacity = 1) => `rgba(60,179,113, ${opacity})`, // optional
-              strokeWidth: 4, // optional
+              data: chartData.candles.last,
+              color: (opacity = 1) => `#25a750`,
+              strokeWidth: 2,
             },
-          
-           
+
+
           ],
         }}
         width={Dimensions.get('window').width} // from react-native
@@ -112,24 +110,25 @@ const BBLineChart = ({symbol}) => {
         yAxisInterval={1} // optional, defaults to 1
         chartConfig={{
           backgroundColor: '#e26a00',
-          backgroundGradientFrom: '#fb8c00',
-          backgroundGradientTo: '#ffa726',
+          backgroundGradientFrom: '#404040',
+          backgroundGradientTo: '#404040',
           decimalPlaces: 2, // optional, defaults to 2dp
           color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           style: {
-            borderRadius: 16,
+
           },
           propsForDots: {
-            r: '6',
-            strokeWidth: '2',
+            r: '0',
+            strokeWidth: '0',
             stroke: '#ffa726',
           },
         }}
         bezier
         style={{
-          marginVertical: 8,
-          borderRadius: 16,
+          borderRadius: 5,
+          margin: 5,
+
         }}
       />
     </View>
