@@ -1,23 +1,18 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { OptionsCurrenciesContext } from "../context/OptionsCurrencyContext";
 
+/** Moeda de cotação */
+const QuoteCurrencies = () => {
 
-const Pairs = () => {
-
-    const [pairs, setPairs] = useState([
-        { name: 'USDT', checked: false },
-        { name: 'BTC', checked: false },
-        { name: 'BNB', checked: true },
-        { name: 'ETH', checked: true },
-        { name: 'BRL', checked: true },
-    ]);
+    const { quoteCurrencies, setQuoteCurrencies } = useContext(OptionsCurrenciesContext);
 
     return (
         <View>
             <FlatList
                 style={styles.container}
                 horizontal={true}
-                data={pairs}
+                data={quoteCurrencies}
                 /*style={[
                      tailwind('px-4 h-10 max-h-10 items-center border-t-2'),
                      styles.bgColor,
@@ -26,8 +21,8 @@ const Pairs = () => {
                     <TouchableOpacity
                         style={styles.button}
                         onPress={() => {
-                            setPairs(
-                                [...pairs].map((i) => {
+                            setQuoteCurrencies(
+                                [...quoteCurrencies].map((i) => {
                                     if (i.checked === true) {
                                         i.checked = false;
                                     }
@@ -73,4 +68,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Pairs;
+export default QuoteCurrencies;

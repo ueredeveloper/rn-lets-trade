@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
     View,
     StyleSheet,
@@ -8,10 +8,10 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import BBLineChart from './BBLineChart';
+import { OptionsCurrenciesContext } from '../context/OptionsCurrencyContext';
 
 
-const CustomAnimatedAccordion = ({symbol}) => {
-    
+const CustomAnimatedAccordion = ({ symbol }) => {
 
     const [expanded, setExpanded] = useState(false);
     const [animation, setAnimation] = useState(new Animated.Value(0));
@@ -46,6 +46,14 @@ const CustomAnimatedAccordion = ({symbol}) => {
         overflow: 'hidden',
     };
 
+    const { intervals } = useContext(OptionsCurrenciesContext);
+
+    const [interval, setInterval] = useState('1d');
+    useEffect(() => {
+        let interval = intervals.find(i => i.checked === true);
+        setInterval(interval.name);
+    }, [intervals])
+
     return (
         <View>
             <TouchableOpacity style={styles.button} onPress={toggleAccordion}>
@@ -59,7 +67,7 @@ const CustomAnimatedAccordion = ({symbol}) => {
             </TouchableOpacity>
             {expanded ? (
                 <Animated.View style={[styles.content, animatedStyle]}>
-                    <BBLineChart symbol={symbol}/>
+                    <BBLineChart symbol={symbol} interval={interval} />
                 </Animated.View>
 
             ) : (<View></View>)}

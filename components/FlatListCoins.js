@@ -1,10 +1,12 @@
-import React from 'react';
+import { useContext } from 'react';
 import { StyleSheet, FlatList } from 'react-native';
 import CoinInfo from './CoinInfo';
 import CustomAnimatedAccordion from './CustomAnimatedAccordion';
+import { OptionsCurrenciesContext } from '../context/OptionsCurrencyContext';
 
 const FlatListCoins = ({ listCoins }) => {
-    
+
+    const { intervals, setIntervals } = useContext(OptionsCurrenciesContext);
 
     const renderAccordionItem = ({ item }) => (
         <>
@@ -12,7 +14,6 @@ const FlatListCoins = ({ listCoins }) => {
             <CustomAnimatedAccordion symbol={item.pair} />
         </>
     );
-    
 
     return (
         <FlatList

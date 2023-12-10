@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import {
   LineChart,
@@ -11,7 +11,6 @@ import {
 import { calculateBollingerBands } from '../utilities/calculateBollingerBands';
 
 import { fetchCandles } from '../services/fetchCandles';
-// ... other imports
 
 const ChartData = React.memo(
   ({ labels, upperData, middleData, lowerData, lastData }) => {
@@ -74,7 +73,7 @@ const ChartData = React.memo(
   }
 );
 
-const BBLineChart = ({ symbol }) => {
+const BBLineChart = ({ symbol, interval }) => {
   const [chartData, setChartData] = useState({
     labels: ['', '', '', '', '', ''],
     candles: {
@@ -88,12 +87,13 @@ const BBLineChart = ({ symbol }) => {
       lower: [0, 0, 0, 0, 0, 0]
     }
   });
-  
+
 
   useEffect(() => {
+
     (async () => {
       try {
-        await fetchCandles(symbol, 36, '1d')
+        await fetchCandles(symbol, 36, interval)
           .then(candles => {
 
             let labels = candles.map((item) =>
@@ -126,10 +126,11 @@ const BBLineChart = ({ symbol }) => {
         console.error('Error fetching candles:', error);
       }
     })();
-  }, []);
+  }, [interval]);
 
   return (
     <View>
+      <Text> Intervalo: {interval}, Par: {symbol}</Text>
       <ChartData
         labels={chartData.labels}
         upperData={chartData.bollingerBands.upper}

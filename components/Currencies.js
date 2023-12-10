@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { SafeAreaView, StatusBar, StyleSheet, Text } from 'react-native';
 import FlatListCoins from './FlatListCoins';
 import { fetchAllCoins } from '../services/fetchAllCoins';
 import SearchCoins from './SearchCoins';
 import Intervals from './Intervals'
-import Pairs from './Pairs';
+import QuoteCurrencies from './QuoteCurrencies';
+import { OptionsCurrenciesContext } from '../context/OptionsCurrencyContext';
 
-const ListCoinsPricePair = React.memo(() => {
+const Currencies = React.memo(() => {
   const [listCoins, setListCoins] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const { quoteCurrencies} = useContext(OptionsCurrenciesContext);
 
   useEffect(() => {
     const fetchCoins = async () => {
@@ -27,15 +30,22 @@ const ListCoinsPricePair = React.memo(() => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Intervals/>
-      <Pairs/>
-      <SearchCoins/>
+      <SearchCoins />
+
+      <Intervals />
+      <QuoteCurrencies />
       {loading ? (
         /* Show a loading indicator here if needed */
         <Text>Loading...</Text>
       ) : (
-        <FlatListCoins listCoins={listCoins} />
+        <FlatListCoins listCoins={
+          listCoins.filter(coin => {
+            const checked = quoteCurrencies.filter(crypto => crypto.checked);
+            return checked.some(crypto => coin.pair.endsWith(crypto.name));
+          })
+        } />
       )}
+
     </SafeAreaView>
   );
 });
@@ -44,8 +54,8 @@ const ListCoinsPricePair = React.memo(() => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-   //marginTop: StatusBar.currentHeight || 0,
+    //marginTop: StatusBar.currentHeight || 0,
   },
 });
 
-export default ListCoinsPricePair;
+export default Currencies;

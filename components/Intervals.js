@@ -1,25 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { OptionsCurrenciesContext } from '../context/OptionsCurrencyContext'; // Import the context
+
 
 
 const Intervals = () => {
 
-    const [intervals, setIntervals] = useState([
-        { name: '1m', checked: false },
-        { name: '5m', checked: false },
-        { name: '15m', checked: false },
-        { name: '30m', checked: false },
-        { name: '1h', checked: true },
-        { name: '2h', checked: false },
-        { name: '4h', checked: false },
-        { name: '6h', checked: false },
-        { name: '8h', checked: false },
-        { name: '12h', checked: false },
-        { name: '1d', checked: false },
-        { name: '3d', checked: false },
-        { name: '1w', checked: false },
-        { name: '1M', checked: false },
-    ]);
+    const {intervals, setIntervals } = useContext(OptionsCurrenciesContext);
 
     return (
         <View>
