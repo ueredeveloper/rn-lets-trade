@@ -11,6 +11,7 @@ import {
 import { calculateBollingerBands } from '../utilities/calculateBollingerBands';
 
 import { fetchCandles } from '../services/fetchCandles';
+import { bollingerbands } from 'technicalindicators';
 
 const ChartData = React.memo(
   ({ labels, upperData, middleData, lowerData, lastData }) => {
@@ -81,6 +82,8 @@ const BBLineChart = ({ symbol, interval }) => {
       closed: [0, 0, 0, 0, 0, 0],
       last: [0, 0, 0, 0, 0, 0]
     },
+    closedCandles: [0, 0, 0, 0, 0, 0],
+    lastCandles: [0, 0, 0, 0, 0, 0],
     bollingerBands: {
       upper: [0, 0, 0, 0, 0, 0],
       middle: [0, 0, 0, 0, 0, 0],
@@ -109,7 +112,7 @@ const BBLineChart = ({ symbol, interval }) => {
               lower: bb.map(item => item.lower)
             }
             // Busca últimos componentes da array `candles` para comparar com as bollinger bands no chart
-            let last = closed.slice(-bollingerBands.upper.length);
+            let last = candles.slice(-bollingerBands.upper.length);
 
             setChartData({
               labels: labels,
@@ -117,6 +120,8 @@ const BBLineChart = ({ symbol, interval }) => {
                 closed: closed,
                 last: last
               },
+              closedCandles: closed,
+              lastCandles: last,
               bollingerBands: bollingerBands,
             });
 
@@ -126,10 +131,13 @@ const BBLineChart = ({ symbol, interval }) => {
         console.error('Error fetching candles:', error);
       }
     })();
+
+    
   }, [interval]);
 
   return (
     <View>
+     
       <Text> Intervalo: {interval}, Par: {symbol}</Text>
       <ChartData
         labels={chartData.labels}

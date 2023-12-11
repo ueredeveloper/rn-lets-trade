@@ -2,16 +2,17 @@ import React, { useContext, useEffect, useState } from 'react';
 import { SafeAreaView, StatusBar, StyleSheet, Text } from 'react-native';
 import FlatListCoins from './FlatListCoins';
 import { fetchAllCoins } from '../services/fetchAllCoins';
-import SearchCoins from './SearchCoins';
+import SearchCurrencies from './SearchCurrencies';
 import Intervals from './Intervals'
 import QuoteCurrencies from './QuoteCurrencies';
+import Indicators from './Indicators';
 import { OptionsCurrenciesContext } from '../context/OptionsCurrencyContext';
 
 const Currencies = React.memo(() => {
   const [listCoins, setListCoins] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const { quoteCurrencies} = useContext(OptionsCurrenciesContext);
+  const { quoteCurrencies } = useContext(OptionsCurrenciesContext);
 
   useEffect(() => {
     const fetchCoins = async () => {
@@ -26,14 +27,16 @@ const Currencies = React.memo(() => {
     };
 
     fetchCoins();
+
   }, []);
 
   return (
     <SafeAreaView style={styles.container}>
-      <SearchCoins />
+      <SearchCurrencies />
 
       <Intervals />
       <QuoteCurrencies />
+      <Indicators />
       {loading ? (
         /* Show a loading indicator here if needed */
         <Text>Loading...</Text>

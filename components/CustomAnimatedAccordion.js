@@ -9,6 +9,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import BBLineChart from './BBLineChart';
 import { OptionsCurrenciesContext } from '../context/OptionsCurrencyContext';
+import { CandlestickBandsChart } from './CandlestickBandsChart';
 
 
 const CustomAnimatedAccordion = ({ symbol }) => {
@@ -67,7 +68,7 @@ const CustomAnimatedAccordion = ({ symbol }) => {
             </TouchableOpacity>
             {expanded ? (
                 <Animated.View style={[styles.content, animatedStyle]}>
-                    <BBLineChart symbol={symbol} interval={interval} />
+                    <CandlestickBandsChart symbol={symbol} interval={interval} />
                 </Animated.View>
 
             ) : (<View></View>)}

@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-function SearchCoins() {
+function searchCurrencies() {
 
     const [text, onChangeText] = React.useState('Useless Multiline Placeholder');
     const onPress = () => {
@@ -44,4 +44,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default SearchCoins;
+export default searchCurrencies;
