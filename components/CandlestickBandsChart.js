@@ -65,11 +65,6 @@ function CandlestickBandsChart({ symbol, interval }) {
   }, [symbol, interval]);
 
   useEffect(() => {
-   // console.log(chartData)
-  }, [chartData])
-
-
-  useEffect(() => {
 
     let chart = echarts.getInstanceByDom(skiaRef.current);
 

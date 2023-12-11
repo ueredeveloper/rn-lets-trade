@@ -1,19 +1,19 @@
 const sortByBollingersLowerAndCandlesClose = (coins) => {
 
-    function compare(a, b) {
-        if (a > b) {
-            return -(a - b) / a * 100;
-        }
-        return (a - b) / a * 100;
+    /* function compare(a, b) {
+         if (a > b) {
+             return -(a - b) / a * 100;
+         }
+         return (a - b) / a * 100;
+ 
+     }*/
 
-    }
+    coins.sort((x, y) => {
+        let lenX = x.candles.length
+        let lenY = y.candles.length
 
-    coins.sort((a, b) => {
-        let lenA = a.bollingerBands.lower.length;
-        let lenB = b.bollingerBands.lower.length;
-        let diffA = compare(a.bollingerBands.lower[lenA - 1], a.candles[lenA - 1].close);
-        let diffB = compare(b.bollingerBands.lower[lenB - 1], b.candles[lenB - 1].close);
-        return diffA - diffB;
+        return ((Number(x.candles[lenX - 1].close) - x.bollingerBands.lower[lenX - 1]) / x.candles[lenX - 1].close) -
+            ((Number(y.candles[lenY - 1].close) - y.bollingerBands.lower[lenY - 1]) / y.candles[lenY - 1].close)
     });
 
     return coins;

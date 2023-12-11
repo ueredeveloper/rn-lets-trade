@@ -60,7 +60,7 @@ const Currencies = React.memo(() => {
       (async () => {
         try {
           let bolllingerAndCandles = await Promise.all(
-            filteredCoins.slice(0, 100).map(async coin => {
+            filteredCoins.slice(0, 60).map(async coin => {
               const fetchedCandles = await fetchCandles(coin.pair, 36, interval);
               const bollingerBands = calculateBollingerBands(14, fetchedCandles);
               const candles = calculateRecentCandles(bollingerBands.upper.length, fetchedCandles);
@@ -80,17 +80,17 @@ const Currencies = React.memo(() => {
   }, [indicatorsCurrencies]);
 
 
-  
+
   useEffect(() => {
     // criação de objeto para teste no js fiddle
-    /* let sc = sortedCoins.map(sc => {
-       return {
-         bollingerBands: { lower: sc.bollingerBands.lower },
-         candles: sc.candles.map(c => { return { close: c.close } })
-       }
-     })
- 
-     console.log(JSON.stringify(sc))*/
+    let sc = sortedCoins.map(sc => {
+      return {
+        bollingerBands: { lower: sc.bollingerBands.lower },
+        candles: sc.candles.map(c => { return { close: c.close } })
+      }
+    })
+
+    console.log(JSON.stringify(sc))
   }, [sortedCoins])
 
   return (
