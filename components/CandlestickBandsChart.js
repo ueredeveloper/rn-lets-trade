@@ -5,6 +5,7 @@ import { bollingerbands } from 'technicalindicators';
 
 import { fetchCandles } from '../services/fetchCandles';
 import { calculateBollingerBands } from '../utilities/calculateBollingerBands';
+import { calculateRecentCandles } from '../utilities/calculateRecenteCandles';
 
 echarts.use([SVGRenderer]);
 const E_HEIGHT = 400;
@@ -12,13 +13,12 @@ const E_WIDTH = Dimensions.get('window').width;
 
 function CandlestickBandsChart({ symbol, interval }) {
 
-  console.log('symbol: ', symbol)
-
   // cor dos candles (compra e venda)
-  const upColor = '#ec0000';
-  const upBorderColor = '#8A0000';
-  const downColor = '#00da3c';
-  const downBorderColor = '#008F28';
+  const upColor = '#00da3c';
+  const upBorderColor = '#008F28';
+  const downColor = '#ec0000';
+  const downBorderColor = '#8A0000';
+
 
   const skiaRef = useRef(null);
 
@@ -37,26 +37,21 @@ function CandlestickBandsChart({ symbol, interval }) {
     (async () => {
       try {
         await fetchCandles(symbol, 36, interval)
-          .then(candles => {
+          .then(fetchedCandles => {
 
-            let labels = candles.map((item) =>
+            // lables para o chart
+            let labels = fetchedCandles.map((item) =>
               new Date(item.closeTime).getHours()
             );
-            let closedCandles = candles.map((item) => parseFloat(item.close));
+            // cálculo do indicador bollinger bands
+            let bollingerBands = calculateBollingerBands(14, fetchedCandles);
 
-            let bb = calculateBollingerBands(14, closedCandles);
-
-            let bollingerBands = {
-              upper: bb.map((item) => item.upper),
-              middle: bb.map(item => item.middle),
-              lower: bb.map(item => item.lower)
-            }
-            // Busca últimos componentes da array `candles` para comparar com as bollinger bands no chart
-            let lastCandles = candles.slice(-bollingerBands.upper.length);
+            // Busca dos últimos componentes da array `fetchedCandles` para mostrar com os resultados calculados bollinger bands no chart
+            let candles = calculateRecentCandles(bollingerBands.upper.length, fetchedCandles)
 
             setChartData({
               labels: labels,
-              candles: lastCandles,
+              candles: candles,
               bollingerBands: bollingerBands,
             });
           });
@@ -68,7 +63,9 @@ function CandlestickBandsChart({ symbol, interval }) {
 
   }, [symbol, interval]);
 
-
+  useEffect(() => {
+   // console.log(chartData)
+  }, [chartData])
 
 
   useEffect(() => {
@@ -79,6 +76,7 @@ function CandlestickBandsChart({ symbol, interval }) {
       const option = {
         title: {
           text: `${symbol}, ${interval}`,
+          top: 20,
           left: 0,
         },
         // ... (other chart configurations)
@@ -91,6 +89,14 @@ function CandlestickBandsChart({ symbol, interval }) {
             // Other tooltip configurations as needed
           },
         }),
+        legend: {
+          data: ['Candles', 'Upper', 'Middle', 'Lower', 'Close']
+        },
+        grid: {
+          left: '12%',
+          right: '15%',
+          bottom: '15%'
+        },
         xAxis: {
           type: 'category',
           data: chartData.labels,
@@ -109,13 +115,13 @@ function CandlestickBandsChart({ symbol, interval }) {
         dataZoom: [
           {
             type: 'inside',
-            start: 50,
+            start: 30, /* zoom do slide*/
             end: 100,
           },
           {
             show: true,
             type: 'slider',
-            top: '90%',
+            top: '90%', /* posição do slide: abaixo do chart */
             start: 50,
             end: 100,
           },
@@ -124,7 +130,7 @@ function CandlestickBandsChart({ symbol, interval }) {
           {
             name: 'Candles',
             type: 'candlestick',
-            data: chartData.candles.map(c => [c.open, c.close, c.high, c.low]),
+            data: chartData.candles.map(c => [c.open, c.close, c.low, c.high]),
             itemStyle: {
               color: upColor,
               color0: downColor,
@@ -239,6 +245,16 @@ function CandlestickBandsChart({ symbol, interval }) {
             lineStyle: {
               opacity: 0.5,
             },
+          },
+          {
+            name: 'Close',
+            type: 'line',
+            data: chartData.candles.map(c => c.close),
+            smooth: true,
+            lineStyle: {
+              opacity: 0.5,
+              color: 'gray'
+            },
           }
         ],
       };
@@ -251,9 +267,9 @@ function CandlestickBandsChart({ symbol, interval }) {
           height: E_HEIGHT,
         });
       }
-  
+
       chart.setOption(option);
-  
+
       return () => {
         if (chart) {
           chart.dispose();
@@ -280,6 +296,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+
   },
 });
 

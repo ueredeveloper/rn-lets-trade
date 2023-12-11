@@ -4,16 +4,20 @@ import { OptionsCurrenciesContext } from '../context/OptionsCurrencyContext'; //
 
 
 
-const Indicators = () => {
+const IndicatorsCurrencies = () => {
 
-    const {indicators, setIndicators } = useContext(OptionsCurrenciesContext);
+    const {indicatorsCurrencies, setIndicatorsCurrencies } = useContext(OptionsCurrenciesContext);
+
+    useEffect(()=>{
+      //  console.log(indicatorsCurrencies)
+    }, [indicatorsCurrencies])
 
     return (
         <View>
             <FlatList
                 style={styles.container}
                 horizontal={true}
-                data={indicators}
+                data={indicatorsCurrencies}
                 /*style={[
                      tailwind('px-4 h-10 max-h-10 items-center border-t-2'),
                      styles.bgColor,
@@ -22,8 +26,8 @@ const Indicators = () => {
                     <TouchableOpacity
                         style={styles.button}
                         onPress={() => {
-                            setIndicators(
-                                [...indicators].map((i) => {
+                            setIndicatorsCurrencies(
+                                [...indicatorsCurrencies].map((i) => {
                                     if (i.checked === true) {
                                         i.checked = false;
                                     }
@@ -69,4 +73,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Indicators;
+export default IndicatorsCurrencies;

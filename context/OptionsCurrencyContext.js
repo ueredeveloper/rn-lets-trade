@@ -29,9 +29,9 @@ const OptionsCurrenciesProvider = ({ children }) => {
   ]);
   const [searchCurrencies, setSearchCurrencies] = useState();
 
-  const [indicators, setIndicators] = useState([
-    { name: 'BolllingerBands', checked: true, },
-    { name: 'Médias', checked: false, }
+  const [indicatorsCurrencies, setIndicatorsCurrencies] = useState([
+    { name: 'BolllingerBands', checked: false, },
+    { name: 'Médias', checked: true, }
   ])
 
   return (
@@ -39,7 +39,7 @@ const OptionsCurrenciesProvider = ({ children }) => {
       quoteCurrencies, setQuoteCurrencies,
       intervals, setIntervals,
       searchCurrencies, setSearchCurrencies,
-      indicators, setIndicators
+      indicatorsCurrencies, setIndicatorsCurrencies
     }}>
       {children}
     </OptionsCurrenciesContext.Provider>
