@@ -2,10 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { OptionsCurrenciesContext } from '../context/OptionsCurrencyContext'; // Import the context
 
-
-
 const IndicatorsCurrencies = () => {
-
+    
     const {indicatorsCurrencies, setIndicatorsCurrencies } = useContext(OptionsCurrenciesContext);
 
     useEffect(()=>{

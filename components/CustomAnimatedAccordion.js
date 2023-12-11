@@ -47,6 +47,7 @@ const CustomAnimatedAccordion = ({ symbol }) => {
         overflow: 'hidden',
     };
 
+    
     const { intervals } = useContext(OptionsCurrenciesContext);
 
     const [interval, setInterval] = useState('1d');

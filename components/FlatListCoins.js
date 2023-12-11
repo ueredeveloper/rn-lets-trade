@@ -4,6 +4,7 @@ import CoinInfo from './CoinInfo';
 import CustomAnimatedAccordion from './CustomAnimatedAccordion';
 import { OptionsCurrenciesContext } from '../context/OptionsCurrencyContext';
 
+
 const FlatListCoins = ({ listCoins }) => {
 
     const { intervals, setIntervals } = useContext(OptionsCurrenciesContext);

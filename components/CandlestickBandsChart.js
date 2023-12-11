@@ -7,6 +7,7 @@ import { fetchCandles } from '../services/fetchCandles';
 import { calculateBollingerBands } from '../utilities/calculateBollingerBands';
 import { calculateRecentCandles } from '../utilities/calculateRecenteCandles';
 
+
 echarts.use([SVGRenderer]);
 const E_HEIGHT = 400;
 const E_WIDTH = Dimensions.get('window').width;

@@ -3,6 +3,7 @@ import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native
 import { OptionsCurrenciesContext } from "../context/OptionsCurrencyContext";
 
 /** Moeda de cotação */
+
 const QuoteCurrencies = () => {
 
     const { quoteCurrencies, setQuoteCurrencies } = useContext(OptionsCurrenciesContext);

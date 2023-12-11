@@ -2,8 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { OptionsCurrenciesContext } from '../context/OptionsCurrencyContext'; // Import the context
 
-
-
 const Intervals = () => {
 
     const {intervals, setIntervals } = useContext(OptionsCurrenciesContext);

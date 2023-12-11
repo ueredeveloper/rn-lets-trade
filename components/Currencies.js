@@ -80,6 +80,7 @@ const Currencies = React.memo(() => {
   }, [indicatorsCurrencies]);
 
 
+  
   useEffect(() => {
     // criação de objeto para teste no js fiddle
     /* let sc = sortedCoins.map(sc => {

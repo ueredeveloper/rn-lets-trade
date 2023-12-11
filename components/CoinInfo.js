@@ -1,7 +1,5 @@
 import React from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
-import { List } from 'react-native-paper';
-
 
 const CoinInfo = ({ pair, price }) => {
     

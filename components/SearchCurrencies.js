@@ -3,6 +3,7 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-nativ
 import { Ionicons } from '@expo/vector-icons';
 
 function searchCurrencies() {
+    
 
     const [text, onChangeText] = React.useState('Useless Multiline Placeholder');
     const onPress = () => {
