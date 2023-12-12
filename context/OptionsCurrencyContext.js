@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 
 const OptionsCurrenciesContext = createContext();
 
@@ -27,11 +27,14 @@ const OptionsCurrenciesProvider = ({ children }) => {
     { name: 'ETH', checked: false },
     { name: 'BRL', checked: false },
   ]);
-  const [searchCurrencies, setSearchCurrencies] = useState();
+  const [searchCurrencies, setSearchCurrencies] = useState('');
 
   const [indicatorsCurrencies, setIndicatorsCurrencies] = useState([
     { name: 'BolllingerBands', checked: false, },
-    { name: 'Médias', checked: true, }
+    { name: 'Médias', checked: true, },
+    { name: 'Fibonacci', checked: false, },
+    { name: 'Candles', checked: false, },
+    { name: 'MacD', checked: false, },
   ])
 
   return (

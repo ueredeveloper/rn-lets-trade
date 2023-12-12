@@ -33,7 +33,7 @@ function HomeScreen({ navigation }) {
             })}>
             <Tab.Screen name="Favorites" component={FavoriteScreen} />
             <Tab.Screen name="List Coins" children={() => (
-                <OptionsCurrenciesProvider><Currencies /></OptionsCurrenciesProvider>
+                <OptionsCurrenciesProvider><Currencies navigation={navigation} /></OptionsCurrenciesProvider>
             )} />
             <Tab.Screen name="Settings View" component={SettingsView} />
         </Tab.Navigator>

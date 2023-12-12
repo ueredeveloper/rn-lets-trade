@@ -5,13 +5,13 @@ import CustomAnimatedAccordion from './CustomAnimatedAccordion';
 import { OptionsCurrenciesContext } from '../context/OptionsCurrencyContext';
 
 
-const FlatListCoins = ({ listCoins }) => {
+const FlatListCoins = ({ listCoins, navigation }) => {
 
     const { intervals, setIntervals } = useContext(OptionsCurrenciesContext);
 
     const renderAccordionItem = ({ item }) => (
         <>
-            <CoinInfo pair={item.pair} price={item.price} />
+            <CoinInfo navigation={navigation} pair={item.pair} price={item.price} />
             <CustomAnimatedAccordion symbol={item.pair} />
         </>
     );
@@ -20,7 +20,7 @@ const FlatListCoins = ({ listCoins }) => {
         <FlatList
             data={listCoins}
             renderItem={renderAccordionItem}
-            keyExtractor={(item) => `${item.pair}_${item.price}`}
+            keyExtractor={(item) => `${item.pair}_${item.price} Math.random()`}
         />
     );
 };

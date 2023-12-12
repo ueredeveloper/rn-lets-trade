@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     button: {
         minHeight: 40,
         minWidth: 40,
-        backgroundColor: 'red',
+        backgroundColor:'rgb(189, 195, 199);, 1',
         padding: 10,
       
     },
