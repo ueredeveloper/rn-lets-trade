@@ -60,9 +60,10 @@ const BrowserScreen = ({ route, navigation }) => {
                     style={styles.pickers}
                     itemStyle={styles.pickersItems}
                     onValueChange={(value, index) => setPublished_Url(value)}>
-                    {posts.map((post) => {
+                    {posts.map((post, i) => {
                         return (
                             <Picker.Item
+                            key={`_posts`+ i}
                                 label={post.dataCard.author.username}
                                 value={post.dataCard.data.published_url}
                             />
@@ -82,7 +83,7 @@ const BrowserScreen = ({ route, navigation }) => {
                     name="caret-back-outline"
                     size={20}
                     color="#000000"
-                    onPress={() => navigation.push('Home')}
+                    onPress={() => navigation.push('HomeScreen')}
                 />
             </View>
         </View>
