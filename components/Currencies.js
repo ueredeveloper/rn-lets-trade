@@ -88,8 +88,8 @@ const Currencies = ({ navigation }) => {
             // Busca as velas (candles) para cada moeda
             const updatedCoins = await Promise.all(
               chunk.map(async coin => {
-                const fetchedCandles = await fetchCandles(coin.pair, 36, interval);
-                const bollingerBands = calculateBollingerBands(14, fetchedCandles);
+                const fetchedCandles = await fetchCandles(coin.pair, 46, interval);
+                const bollingerBands = calculateBollingerBands(20, fetchedCandles);
                 const candles = calculateRecentCandles(bollingerBands.upper.length, fetchedCandles);
 
                 return { ...coin, bollingerBands, candles };

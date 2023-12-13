@@ -37,7 +37,7 @@ function CandlestickBandsChart({ symbol, interval }) {
 
     (async () => {
       try {
-        await fetchCandles(symbol, 36, interval)
+        await fetchCandles(symbol, 46, interval)
           .then(fetchedCandles => {
 
             // lables para o chart
@@ -45,7 +45,7 @@ function CandlestickBandsChart({ symbol, interval }) {
               new Date(item.closeTime).getHours()
             );
             // cálculo do indicador bollinger bands
-            let bollingerBands = calculateBollingerBands(14, fetchedCandles);
+            let bollingerBands = calculateBollingerBands(20, fetchedCandles);
 
             // Busca dos últimos componentes da array `fetchedCandles` para mostrar com os resultados calculados bollinger bands no chart
             let candles = calculateRecentCandles(bollingerBands.upper.length, fetchedCandles)
