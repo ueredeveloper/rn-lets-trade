@@ -2,6 +2,7 @@ import { NativeModules } from 'react-native';
 import { Constants } from 'expo';
 
 const { manifest } = Constants;
+
 const env = {};
 
 // Add all variables from .env file to the env object

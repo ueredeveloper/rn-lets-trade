@@ -1,42 +1,27 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, ScrollView, Button, Alert } from "react-native";
-import Binance from 'binance-api-react-native';
-import {BINANCE_API_KEY, BINANCE_SECRECT_KEY} from "@env";
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { BrowserScreen, HomeScreen } from './screens';
 
-let i = 0;
+const Stack = createStackNavigator();
 
-export default function App() {
-
-  // Authenticated client, can make signed calls
- const client = Binance({
-    apiKey: BINANCE_API_KEY,
-    apiSecret: BINANCE_SECRECT_KEY,
-  });
-
-  //client.time().then(time => console.warn(time));
-
-  const loadCandle = async ()=>{
-    console.log(await client.candles({ symbol: 'BTCUSDT', interval: '1d', limit: 2 }))
-  }
-
-  loadCandle();
-
- 
+function MyStack() {
   return (
-    <View style={styles.container}>
-     <Text>Hello world With GitHub Space</Text>
-     <Button
-        title="Press me"
-        onPress={() => Alert.alert('Simple Button pressed: '+ i++)}/>
-    </View>
+    <Stack.Navigator>
+      <Stack.Screen name="HomeScreen" component={HomeScreen} />
+      <Stack.Screen name="BrowserScreen" component={BrowserScreen} />
+    </Stack.Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+
+export default function App() {
+
+  //calculate(14)
+
+  return (
+    <NavigationContainer>
+      <MyStack />
+    </NavigationContainer>
+  );
+}
