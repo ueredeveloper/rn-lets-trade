@@ -1,9 +1,11 @@
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
-import { ListCoinsPricePair, SettingsView } from '../components';
+import { Currencies, SettingsView } from '../components';
+import FlatListCoins from '../components/FlatListCoins';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FavoriteScreen from './FavoritesScreen';
+import { OptionsCurrenciesProvider } from '../context/OptionsCurrencyContext';
 
 const Tab = createBottomTabNavigator();
 
@@ -30,13 +32,16 @@ function HomeScreen({ navigation }) {
                 tabBarInactiveTintColor: 'gray',
                 headerShown: false,
             })}>
+                <Tab.Screen name="List Coins" children={() => (
+                <OptionsCurrenciesProvider><Currencies navigation={navigation} /></OptionsCurrenciesProvider>
+            )} />
             <Tab.Screen name="Favorites" component={FavoriteScreen} />
-            <Tab.Screen name="List Coins" component={ListCoinsPricePair} />
+            
             <Tab.Screen name="Settings View" component={SettingsView} />
+            
         </Tab.Navigator>
     );
 }
-
 
 export default HomeScreen;
 
