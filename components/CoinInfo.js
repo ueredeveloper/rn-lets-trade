@@ -19,6 +19,7 @@ const CoinInfo = ({ navigation, pair, price }) => {
     );
 };
 
+
 const styles = StyleSheet.create({
 
     container: {

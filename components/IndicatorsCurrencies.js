@@ -6,10 +6,6 @@ const IndicatorsCurrencies = () => {
     
     const {indicatorsCurrencies, setIndicatorsCurrencies } = useContext(OptionsCurrenciesContext);
 
-    useEffect(()=>{
-      //  console.log(indicatorsCurrencies)
-    }, [indicatorsCurrencies])
-
     return (
         <View>
             <FlatList

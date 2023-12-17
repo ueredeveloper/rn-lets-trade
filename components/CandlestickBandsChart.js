@@ -20,7 +20,6 @@ function CandlestickBandsChart({ symbol, interval }) {
   const downColor = '#ec0000';
   const downBorderColor = '#8A0000';
 
-
   const skiaRef = useRef(null);
 
   const [chartData, setChartData] = useState({

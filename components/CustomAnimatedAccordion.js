@@ -77,6 +77,7 @@ const CustomAnimatedAccordion = ({ symbol }) => {
     );
 };
 
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,

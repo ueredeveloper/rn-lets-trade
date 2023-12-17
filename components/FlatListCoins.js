@@ -9,10 +9,6 @@ const FlatListCoins = ({ listCoins, navigation }) => {
 
     const { intervals, setIntervals } = useContext(OptionsCurrenciesContext);
 
-    useEffect(()=>{
-        //console.log(listCoins)
-    },[])
-
     const renderAccordionItem = ({ item }) => (
         <>
             <CoinInfo navigation={navigation} pair={item.pair} price={item.price} />

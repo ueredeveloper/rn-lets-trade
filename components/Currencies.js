@@ -19,6 +19,7 @@ const Currencies = ({ navigation }) => {
   const [filteredCoins, setFilteredCoins] = useState([]);
   const [sortedCoins, setSortedCoins] = useState([]);
   const [loading, setLoading] = useState(true);
+  
 
   const { quoteCurrencies, indicatorsCurrencies, intervals, searchCurrencies } = useContext(OptionsCurrenciesContext);
 
