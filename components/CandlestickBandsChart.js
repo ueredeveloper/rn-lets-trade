@@ -137,36 +137,9 @@ function CandlestickBandsChart({ symbol, interval }) {
               label: {
 
               },
-              data: [
-                {
-                  name: 'Mark',
-                  coord: [chartData.labels[0], chartData.candles[0].high],
-                  value: chartData.candles[0].high,
-                  itemStyle: {
-                    color: 'rgb(41,60,85)',
-                  },
-                },
-                {
-                  name: 'highest value',
-                  type: 'max',
-                  valueDim: 'highest',
-                },
-                {
-                  name: 'lowest value',
-                  type: 'min',
-                  valueDim: 'lowest',
-                },
-                {
-                  name: 'average value on close',
-                  type: 'average',
-                  valueDim: 'close',
-                },
-              ],
-              tooltip: {
-                formatter: function (param) {
-                  return param.name + '<br>' + (param.data.coord || '');
-                },
-              },
+              // labels, low high valoes etc
+              data: [],
+
             },
             markLine: {
               symbol: ['none', 'none'],
