@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, ScrollView } from 'react-native';
 import { BlackListButton, BollingerBandsButton, FavoritesButton, WebAnalyticsButton } from './buttons';
 
 const CoinInfo = ({ navigation, pair, price }) => {
@@ -9,12 +9,12 @@ const CoinInfo = ({ navigation, pair, price }) => {
                 <Text style={styles.text}> {pair}</Text>
                 <Text style={styles.text}> {price}</Text>
             </View>
-            <View style={{ flexDirection: 'row' }}>
+            <ScrollView horizontal={true}>
                 <BollingerBandsButton />
                 <FavoritesButton />
                 <BlackListButton />
                 <WebAnalyticsButton navigation={navigation} pair={pair} />
-            </View>
+            </ScrollView>
         </View>
     );
 };
@@ -26,10 +26,10 @@ const styles = StyleSheet.create({
 
     },
     content: {
-        
+
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginLeft: 10, 
+        marginLeft: 10,
         marginRight: 10
     },
     button: {

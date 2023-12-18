@@ -20,7 +20,7 @@ const FlatListCoins = ({ listCoins, navigation }) => {
         <FlatList
             data={listCoins}
             renderItem={renderAccordionItem}
-            keyExtractor={(item) => `${item.pair}_${item.price} Math.random()`}
+            keyExtractor={(item) => `${item.pair}-${item.price} -${Math.random()}`}
         />
     );
 };
