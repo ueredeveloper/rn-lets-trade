@@ -31,18 +31,23 @@ const OptionsCurrenciesProvider = ({ children }) => {
 
   const [indicatorsCurrencies, setIndicatorsCurrencies] = useState([
     { name: 'BolllingerBands', checked: false, },
-    { name: 'Médias', checked: true, },
-    { name: 'Fibonacci', checked: false, },
+    { name: 'RSI', checked: true, },
+    { name: 'EFI', checked: false, },
     { name: 'Candles', checked: false, },
     { name: 'MacD', checked: false, },
   ])
+
+  const [filteredCoins, setFilteredCoins] = useState([]);
+  const [listCoins, setListCoins] = useState([]);
 
   return (
     <OptionsCurrenciesContext.Provider value={{
       quoteCurrencies, setQuoteCurrencies,
       intervals, setIntervals,
       searchCurrencies, setSearchCurrencies,
-      indicatorsCurrencies, setIndicatorsCurrencies
+      indicatorsCurrencies, setIndicatorsCurrencies,
+      filteredCoins, setFilteredCoins,
+      listCoins, setListCoins
     }}>
       {children}
     </OptionsCurrenciesContext.Provider>
