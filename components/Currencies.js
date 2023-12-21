@@ -12,16 +12,17 @@ import { calculateRecentCandles } from '../utilities/calculateRecenteCandles';
 import IndicatorsCurrencies from './IndicatorsCurrencies';
 import { sortByBollingersLowerAndCandlesClose } from '../utilities/sortByBollingersLowerAndCandlesClose';
 import searchCurrencies from './SearchCurrencies';
+import { fetchDbCurrencies } from '../services/db/fetchDbCurrencies';
 
 const Currencies = ({ navigation }) => {
   
-  const [listCoins, setListCoins] = useState([]);
-  const [filteredCoins, setFilteredCoins] = useState([]);
+  //const [listCoins, setListCoins] = useState([]);
+ // const [filteredCoins, setFilteredCoins] = useState([]);
   const [sortedCoins, setSortedCoins] = useState([]);
   const [loading, setLoading] = useState(true);
   
 
-  const { quoteCurrencies, indicatorsCurrencies, intervals, searchCurrencies } = useContext(OptionsCurrenciesContext);
+  const { quoteCurrencies, indicatorsCurrencies, intervals, searchCurrencies, filteredCoins, setFilteredCoins, listCoins, setListCoins } = useContext(OptionsCurrenciesContext);
 
   const [interval, setInterval] = useState('1d');
 
@@ -50,6 +51,8 @@ const Currencies = ({ navigation }) => {
   useEffect(() => {
     let interval = intervals.find(i => i.checked === true);
     setInterval(interval.name);
+
+    console.log('currencies , set interval')
   }, [intervals]);
 
   /**
@@ -64,6 +67,7 @@ const Currencies = ({ navigation }) => {
       const checked = quoteCurrencies.filter(crypto => crypto.checked);
       return checked.some(crypto => coin.pair.endsWith(crypto.name) && coin.pair.toLowerCase().indexOf(searchCurrencies.toLowerCase()) > -1);
     }));
+    console.log('currencias filter coins ')
 
   }, [listCoins, quoteCurrencies, searchCurrencies]);
 
@@ -132,6 +136,21 @@ const Currencies = ({ navigation }) => {
 
     //console.log(JSON.stringify(sc))
   }, [sortedCoins])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await fetchDbCurrencies();
+      if (result.error) {
+        // Handle error here
+        console.error('Error fetching data:', result.error);
+      } else {
+        // Handle data here
+        console.log('Fetched data:', result.data);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
