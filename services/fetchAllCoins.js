@@ -10,6 +10,8 @@ const fetchAllCoins = async () => {
       pair: pair,
       price: price,
     }));
+
+    
     return listCoins;
   } catch (error) {
     console.error('Error fetching prices:', error);

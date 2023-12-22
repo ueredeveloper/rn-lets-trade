@@ -2,49 +2,61 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useContext, useState, useEffect } from 'react';
 import { OptionsCurrenciesContext } from '../../context/OptionsCurrencyContext';
-import { editDbCurrency } from '../../services/db/editDbCurrency';
+import { editCurrency, insertCurrency } from '../../services/db';
+
 
 const BlackListButton = ({ pair }) => {
 
   const { currencies } = useContext(OptionsCurrenciesContext);
+
   const [currency, setCurrency] = useState({
     object: {
       id: null,
+      symbol: null,
       is_blacklisted: false
     }
   });
 
   useEffect(() => {
-    // Assuming `pair` is defined somewhere in your code.
-    const foundCurrency = currencies.find(c => pair.startsWith(c.symbol));
+
+    const foundCurrency = currencies.find(c => pair === c.symbol);
 
     if (foundCurrency) {
-      let _currency = {
-        object: {
-          id: foundCurrency.id,
-          is_blacklisted: foundCurrency.is_blacklisted
+      console.log('use eff found cu', foundCurrency.symbol)
+      setCurrency(prev => {
+        return {
+          ...prev,
+          object: {
+            id: foundCurrency.id,
+            symbol: foundCurrency.symbol,
+            is_blacklisted: foundCurrency.is_blacklisted
+          }
+
         }
-      }
-      console.log('use eff',pair,  _currency)
-
-      setCurrency(_currency);
+      });
     }
-
   }, []);
 
   const handleEditcurrency = () => {
 
-    console.log('handle ', currency)
+    let _isBlacklisted = !currency.object.is_blacklisted;
+
     let _currency = {
       object: {
-        id: currency.id,
-        is_blacklisted: !currency.is_blacklisted
+        id: currency.object.id,
+        is_blacklisted: _isBlacklisted
       }
     }
     setCurrency(_currency);
 
-    editDbCurrency(_currency);
+    if (currency.object.id !== null) {
+      editCurrency(_currency);
+    } else {
+      insertCurrency({ object: { symbol: pair, is_blacklisted: _isBlacklisted } });
+    }
+
   }
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>

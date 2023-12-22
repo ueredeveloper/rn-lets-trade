@@ -1,5 +1,6 @@
 import React, { createContext, useState , useEffect} from "react";
-import { fetchDbCurrencies } from "../services/db/fetchDbCurrencies";
+import { listCurrencies } from "../services/db";
+
 
 const OptionsCurrenciesContext = createContext();
 
@@ -45,7 +46,7 @@ const OptionsCurrenciesProvider = ({ children }) => {
 
   useEffect(() => {
       const fetchData = async () => {
-          const result = await fetchDbCurrencies();
+          const result = await listCurrencies();
           if (result.error) {
               // Handle error here
               console.error('Error fetching data:', result.error);
@@ -56,7 +57,7 @@ const OptionsCurrenciesProvider = ({ children }) => {
       };
 
       fetchData();
-      console.log('db cur render')
+
   }, []);
 
   return (

@@ -1,11 +1,13 @@
 import { NHOST_ADMIN_SECRET } from "@env";
 
-const editDbCurrency = async ({ currency }) => {
+const editCurrency = async (currency) => {
 
-    console.log(currency)
+    let id = currency.object.id;
+    console.log('edit coin ', id, currency.object.is_blacklisted)
+
     try {
         let response = await fetch(
-            'https://rndhdcgyemijvebfqipo.hasura.sa-east-1.nhost.run/api/rest/currency/' + currency.id,
+            'https://rndhdcgyemijvebfqipo.hasura.sa-east-1.nhost.run/api/rest/currency/' + id,
             {
                 method: 'POST',
                 headers: {
@@ -22,7 +24,6 @@ const editDbCurrency = async ({ currency }) => {
 
         let data = await response.json();
 
-        console.log('edit========== ', data)
         return {
             status: response.status,
             data: data
@@ -34,4 +35,4 @@ const editDbCurrency = async ({ currency }) => {
     }
 };
 
-export { editDbCurrency }
+export { editCurrency }
