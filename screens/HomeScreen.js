@@ -2,7 +2,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import { Currencies, SettingsView } from '../components';
-import FlatListCoins from '../components/FlatListCoins';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FavoriteScreen from './FavoritesScreen';
 import { OptionsCurrenciesProvider } from '../context/OptionsCurrencyContext';

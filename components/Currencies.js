@@ -11,16 +11,12 @@ import { calculateBollingerBands } from '../utilities/calculateBollingerBands';
 import { calculateRecentCandles } from '../utilities/calculateRecenteCandles';
 import IndicatorsCurrencies from './IndicatorsCurrencies';
 import { sortByBollingersLowerAndCandlesClose } from '../utilities/sortByBollingersLowerAndCandlesClose';
-import searchCurrencies from './SearchCurrencies';
-import { fetchDbCurrencies } from '../services/db/fetchDbCurrencies';
 
 const Currencies = ({ navigation }) => {
-  
-  //const [listCoins, setListCoins] = useState([]);
- // const [filteredCoins, setFilteredCoins] = useState([]);
+
   const [sortedCoins, setSortedCoins] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+
 
   const { quoteCurrencies, indicatorsCurrencies, intervals, searchCurrencies, filteredCoins, setFilteredCoins, listCoins, setListCoins } = useContext(OptionsCurrenciesContext);
 
@@ -137,34 +133,24 @@ const Currencies = ({ navigation }) => {
     //console.log(JSON.stringify(sc))
   }, [sortedCoins])
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await fetchDbCurrencies();
-      if (result.error) {
-        // Handle error here
-        console.error('Error fetching data:', result.error);
-      } else {
-        // Handle data here
-        console.log('Fetched data:', result.data);
-      }
-    };
 
-    fetchData();
-  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
-      <SearchCurrencies />
-      <Intervals />
-      <QuoteCurrencies />
-      <IndicatorsCurrencies />
-      {loading ? (
-        /* Show a loading indicator here if needed */
-        <Text>Loading...</Text>
-      ) : (
-        <FlatListCoins listCoins={filteredCoins} navigation={navigation} />
-      )}
+     
+        <SearchCurrencies />
+        <Intervals />
+        <QuoteCurrencies />
+        <IndicatorsCurrencies />
+        {loading ? (
+          /* Show a loading indicator here if needed */
+          <Text>Loading...</Text>
+        ) : (
 
+          <FlatListCoins listCoins={filteredCoins} navigation={navigation} />
+
+        )}
+      
     </SafeAreaView>
   );
 };

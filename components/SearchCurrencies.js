@@ -3,7 +3,7 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-nativ
 import { Ionicons } from '@expo/vector-icons';
 import { OptionsCurrenciesContext } from '../context/OptionsCurrencyContext';
 
-function searchCurrencies() {
+function SearchCurrencies() {
 
     const [inputValue, setInputValue] = useState('');
     const textInputRef = useRef();
@@ -63,4 +63,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default searchCurrencies;
+export default SearchCurrencies;

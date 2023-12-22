@@ -1,26 +1,33 @@
 import { NHOST_ADMIN_SECRET } from "@env";
 
 const saveDbCurrency = async ({currency}) => {
-
+  try {
     let response = await fetch(
-        'https://rndhdcgyemijvebfqipo.hasura.sa-east-1.nhost.run/api/rest/currency',
-        {
-          method: 'POST',
-          headers: {
-            
-            'Content-Type': 'application/JSON',
-            'x-hasura-admin-secret': NHOST_ADMIN_SECRET
-          },
-          body: JSON.stringify(currency)
-        }
-      );
-      
+      'https://rndhdcgyemijvebfqipo.hasura.sa-east-1.nhost.run/api/rest/currency',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-hasura-admin-secret': NHOST_ADMIN_SECRET
+        },
+        body:  JSON.stringify(currency)
+      }
+    );
     
-      let i = {
-        status: await response.status,
-        posts: await response.json(),
-      };
-      return i;
+    if (!response.ok) {
+      throw new Error('Network response was not ok.');
+    }
+
+    let data = await response.json();
+    return {
+      status: response.status,
+      data: data
+    };
+  } catch (error) {
+    return {
+      error: error.message
+    };
+  }
 };
 
 export { saveDbCurrency }

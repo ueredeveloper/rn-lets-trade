@@ -1,4 +1,5 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useState , useEffect} from "react";
+import { fetchDbCurrencies } from "../services/db/fetchDbCurrencies";
 
 const OptionsCurrenciesContext = createContext();
 
@@ -40,6 +41,24 @@ const OptionsCurrenciesProvider = ({ children }) => {
   const [filteredCoins, setFilteredCoins] = useState([]);
   const [listCoins, setListCoins] = useState([]);
 
+  const [currencies, setCurrencies] = useState([])
+
+  useEffect(() => {
+      const fetchData = async () => {
+          const result = await fetchDbCurrencies();
+          if (result.error) {
+              // Handle error here
+              console.error('Error fetching data:', result.error);
+          } else {
+              // Handle data here
+              setCurrencies(result.data.currency)
+          }
+      };
+
+      fetchData();
+      console.log('db cur render')
+  }, []);
+
   return (
     <OptionsCurrenciesContext.Provider value={{
       quoteCurrencies, setQuoteCurrencies,
@@ -47,7 +66,8 @@ const OptionsCurrenciesProvider = ({ children }) => {
       searchCurrencies, setSearchCurrencies,
       indicatorsCurrencies, setIndicatorsCurrencies,
       filteredCoins, setFilteredCoins,
-      listCoins, setListCoins
+      listCoins, setListCoins, 
+      currencies, setCurrencies
     }}>
       {children}
     </OptionsCurrenciesContext.Provider>

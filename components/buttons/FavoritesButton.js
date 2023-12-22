@@ -1,14 +1,31 @@
+import { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Entypo } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { useContext, useEffect } from 'react';
+import { OptionsCurrenciesContext } from '../../context/OptionsCurrencyContext';
 
-const FavoritesButton = () => {
+const FavoritesButton = ({ pair }) => {
+
+  const { currencies } = useContext(OptionsCurrenciesContext);
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    // Assuming `pair` is defined somewhere in your code.
+    const foundCurrency = currencies.find(c => pair.startsWith(c.symbol));
+
+    if (foundCurrency) {
+      setIsFavorite(foundCurrency.is_favorite);
+    }
+    
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <Text style={styles.text}>Favoritos</Text>
         <View style={styles.viewButtons}>
           <TouchableOpacity>
-            <Entypo name="add-to-list" size={24} color="black" />
+            <MaterialIcons name="favorite" size={20} color={isFavorite ? 'red' : 'black'} />
           </TouchableOpacity>
         </View>
       </View>
