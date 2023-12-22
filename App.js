@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { BrowserScreen, HomeScreen } from './screens';
@@ -12,7 +11,6 @@ function MyStack() {
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen name="BrowserScreen" component={BrowserScreen} />
     </Stack.Navigator>
-
   );
 }
 

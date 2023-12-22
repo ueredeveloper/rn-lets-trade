@@ -1,6 +1,7 @@
 /*  name: getPosts
     goal: search for coin posts*/
     export async function getCoinPosts(symbol) {
+      
         let response = await fetch(
           'https://njs-lets-trade.ueredeveloper.repl.co/tradingview/coin-posts/' + symbol,
           {

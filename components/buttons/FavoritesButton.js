@@ -1,34 +1,70 @@
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useContext, useEffect } from 'react';
 import { OptionsCurrenciesContext } from '../../context/OptionsCurrencyContext';
+import { editCurrency, insertCurrency } from '../../services/db';
 
 const FavoritesButton = ({ pair }) => {
 
   const { currencies } = useContext(OptionsCurrenciesContext);
-  const [isFavorite, setIsFavorite] = useState(false);
+
+  const [currency, setCurrency] = useState({
+    object: {
+      id: null,
+      symbol: null,
+      is_favorite: false
+    }
+  });
 
   useEffect(() => {
-    // Assuming `pair` is defined somewhere in your code.
-    const foundCurrency = currencies.find(c => pair.startsWith(c.symbol));
+
+    const foundCurrency = currencies.find(c => pair === c.symbol);
 
     if (foundCurrency) {
-      setIsFavorite(foundCurrency.is_favorite);
+      setCurrency(prev => {
+        return {
+          ...prev,
+          object: {
+            id: foundCurrency.id,
+            symbol: foundCurrency.symbol,
+            is_favorite: foundCurrency.is_favorite
+          }
+
+        }
+      });
     }
-    
   }, []);
+
+  const handleEditcurrency = () => {
+
+    let _is = !currency.object.is_favorite;
+
+    console.log('handle is favorite ', _is)
+
+    let _currency = {
+      object: {
+        id: currency.object.id,
+        is_favorite: _is
+      }
+    }
+    setCurrency(_currency);
+
+    if (currency.object.id !== null) {
+      editCurrency(_currency);
+    } else {
+      insertCurrency({ object: { symbol: pair, is_favorite: _is } });
+    }
+
+  }
 
   return (
     <View style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.text}>Favoritos</Text>
-        <View style={styles.viewButtons}>
-          <TouchableOpacity>
-            <MaterialIcons name="favorite" size={20} color={isFavorite ? 'red' : 'black'} />
-          </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={() => { handleEditcurrency() }}>
+        <View style={styles.buttonContent}>
+          <Text style={styles.text}>Favoritos</Text>
+          <MaterialIcons name="favorite" size={20} color={currency.object.is_favorite ? 'red' : 'black'} />
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -38,12 +74,16 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginRight: 5,
   },
-  content: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  button: {
+    flex: 1, placeContent: 'stretch'
   },
-  viewButtons: {},
   text: { fontSize: 10, marginLeft: 5, marginRight: 5 },
+  buttonContent: {
+    flex: 1,
+    alignItems: 'center',
+    placeContent: 'stretch',
+    flexDirection: 'row',
+  }
 });
 
 export default FavoritesButton;

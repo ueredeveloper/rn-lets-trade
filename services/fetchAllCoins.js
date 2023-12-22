@@ -2,6 +2,7 @@ import { fetchClient } from "./fetchClient";
 
 const fetchAllCoins = async () => {
 
+  
   try {
     const client = await fetchClient();
     const coins = await client.prices();

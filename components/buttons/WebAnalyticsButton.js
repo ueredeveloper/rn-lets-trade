@@ -2,19 +2,17 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 const WebAnalyticsButton = ({ navigation, pair }) => {
+
   return (
     <View style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.text}>TradingView</Text>
-        <View style={styles.viewButtons}>
-          <TouchableOpacity onPress={() => {
-              navigation.navigate('BrowserScreen', { symbol: pair });
-            }}>
-            
-            <Ionicons name="analytics" size={24} color="black" />
-          </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={() => {
+        navigation.navigate('BrowserScreen', { symbol: pair });
+      }}>
+        <View style={styles.buttonContent}>
+          <Text style={styles.text}>Trading View</Text>
+          <Ionicons name="analytics" size={20} color="black" />
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -24,12 +22,16 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginRight: 5,
   },
-  content: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  button: {
+    flex: 1, placeContent: 'stretch'
   },
-  viewButtons: {},
   text: { fontSize: 10, marginLeft: 5, marginRight: 5 },
+  buttonContent: {
+    flex: 1,
+    alignItems: 'center',
+    placeContent: 'stretch',
+    flexDirection: 'row',
+  }
 });
 
 export default WebAnalyticsButton;

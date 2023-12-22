@@ -2,8 +2,6 @@ import { NHOST_ADMIN_SECRET } from "@env";
 
 const insertCurrency = async (currency) => {
 
-  console.log('save cur', currency)
-
   try {
     let response = await fetch(
       'https://rndhdcgyemijvebfqipo.hasura.sa-east-1.nhost.run/api/rest/currency',

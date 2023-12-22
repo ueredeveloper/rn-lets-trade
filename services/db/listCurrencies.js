@@ -1,6 +1,7 @@
 import { NHOST_ADMIN_SECRET } from "@env";
 
 const listCurrencies = async () => {
+  
   try {
     let response = await fetch(
       'https://rndhdcgyemijvebfqipo.hasura.sa-east-1.nhost.run/api/rest/currency',

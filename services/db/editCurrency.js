@@ -3,8 +3,8 @@ import { NHOST_ADMIN_SECRET } from "@env";
 const editCurrency = async (currency) => {
 
     let id = currency.object.id;
-    console.log('edit coin ', id, currency.object.is_blacklisted)
 
+    console.log('edit Currency', currency)
     try {
         let response = await fetch(
             'https://rndhdcgyemijvebfqipo.hasura.sa-east-1.nhost.run/api/rest/currency/' + id,

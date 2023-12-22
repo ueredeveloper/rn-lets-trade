@@ -59,40 +59,34 @@ const BlackListButton = ({ pair }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.text}>Lista Negra</Text>
-        <View style={styles.viewButtons}>
-          <TouchableOpacity onPress={() => { handleEditcurrency() }}>
-            <MaterialCommunityIcons
-              name={currency.object.is_blacklisted ? "currency-usd-off" : "currency-usd"}
-              size={20}
-              color="black"
-            />
-          </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={() => { handleEditcurrency() }}>
+        <View style={styles.buttonContent}>
+          <Text style={styles.text}>Lista Negra</Text>
+          <MaterialCommunityIcons
+            name={currency.object.is_blacklisted ? "currency-usd-off" : "currency-usd"}
+            size={20}
+            color="black"
+          />
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     marginLeft: 5,
     marginRight: 5,
   },
-  content: {
-    flexDirection: 'row',
+  button: {
+    flex: 1, placeContent: 'stretch'
+  },
+  text: { fontSize: 10, marginLeft: 5, marginRight: 5 },
+  buttonContent: {
+    flex: 1,
     alignItems: 'center',
-  },
-  viewButtons: {
-    flexDirection: 'column',
-
-  },
-  text: {
-    marginLeft: 5,
-    marginRight: 5,
-    fontSize: 10,
-  },
+    placeContent: 'stretch',
+    flexDirection: 'row',
+  }
 });
 
 export default BlackListButton;
