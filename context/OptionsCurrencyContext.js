@@ -1,4 +1,4 @@
-import React, { createContext, useState , useEffect} from "react";
+import React, { createContext, useState, useEffect } from "react";
 import { listCurrencies } from "../services/db";
 
 
@@ -39,24 +39,34 @@ const OptionsCurrenciesProvider = ({ children }) => {
     { name: 'MacD', checked: false, },
   ])
 
-  const [filteredCoins, setFilteredCoins] = useState([]);
-  const [listCoins, setListCoins] = useState([]);
+  const [listCoins, setListCoins] = useState({
+    list: [],
+    listByQuotation: {
+      date: new Date(),
+      list: []
+    },
+    listByBBIndicator: {
+      date: new Date(),
+      list: [],
+      bollingerBands: []
+    }
+  });
 
   const [currencies, setCurrencies] = useState([])
 
   useEffect(() => {
-      const fetchData = async () => {
-          const result = await listCurrencies();
-          if (result.error) {
-              // Handle error here
-              console.error('Error fetching data:', result.error);
-          } else {
-              // Handle data here
-              setCurrencies(result.data.currency)
-          }
-      };
+    const fetchData = async () => {
+      const result = await listCurrencies();
+      if (result.error) {
+        // Handle error here
+        console.error('Error fetching data:', result.error);
+      } else {
+        // Handle data here
+        setCurrencies(result.data.currency)
+      }
+    };
 
-      fetchData();
+    fetchData();
 
   }, []);
 
@@ -66,8 +76,7 @@ const OptionsCurrenciesProvider = ({ children }) => {
       intervals, setIntervals,
       searchCurrencies, setSearchCurrencies,
       indicatorsCurrencies, setIndicatorsCurrencies,
-      filteredCoins, setFilteredCoins,
-      listCoins, setListCoins, 
+      listCoins, setListCoins,
       currencies, setCurrencies
     }}>
       {children}

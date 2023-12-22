@@ -14,11 +14,9 @@ import { sortByBollingersLowerAndCandlesClose } from '../utilities/sortByBolling
 
 const Currencies = ({ navigation }) => {
 
-  const [sortedCoins, setSortedCoins] = useState([]);
   const [loading, setLoading] = useState(true);
 
-
-  const { quoteCurrencies, indicatorsCurrencies, intervals, searchCurrencies, filteredCoins, setFilteredCoins, listCoins, setListCoins } = useContext(OptionsCurrenciesContext);
+  const { quoteCurrencies, indicatorsCurrencies, intervals, searchCurrencies, listCoins, setListCoins } = useContext(OptionsCurrenciesContext);
 
   const [interval, setInterval] = useState('1d');
 
@@ -27,7 +25,14 @@ const Currencies = ({ navigation }) => {
     const fetchCoins = async () => {
       try {
         const fetchedCoins = await fetchAllCoins();
-        setListCoins(fetchedCoins);
+        // Preencher com todas moedas buscadas na api binance
+        setListCoins(prev => {
+          return {
+            ...prev,
+            list: fetchedCoins
+          }
+        });
+
         setLoading(false);
       } catch (error) {
         console.error('Error fetching coins:', error);
@@ -39,7 +44,9 @@ const Currencies = ({ navigation }) => {
 
   }, []);
 
-
+  useEffect(() => {
+    console.log(listCoins.listByBBIndicator)
+  }, [listCoins])
 
   /**
    * Mudar o intervalo de pesquisa dos candles (1h, 2h, 1d, ...)
@@ -47,8 +54,6 @@ const Currencies = ({ navigation }) => {
   useEffect(() => {
     let interval = intervals.find(i => i.checked === true);
     setInterval(interval.name);
-
-    console.log('currencies , set interval')
   }, [intervals]);
 
   /**
@@ -57,15 +62,26 @@ const Currencies = ({ navigation }) => {
  * @param {Array} quoteCurrencies - Lista de moedas de cotação a serem consideradas no filtro.
  * @param {string} searchCurrencies - Palavra-chave digitada pelo usuário para busca.
  */
+
+
   useEffect(() => {
     // Filtra moedas com base nas moedas de cotação selecionadas e na palavra-chave digitada pelo usuário.
-    setFilteredCoins(listCoins.filter(coin => {
+    let listByQuotation = listCoins.list.filter(coin => {
       const checked = quoteCurrencies.filter(crypto => crypto.checked);
       return checked.some(crypto => coin.pair.endsWith(crypto.name) && coin.pair.toLowerCase().indexOf(searchCurrencies.toLowerCase()) > -1);
-    }));
-    console.log('currencias filter coins ')
+    })
 
-  }, [listCoins, quoteCurrencies, searchCurrencies]);
+    setListCoins(prev => {
+      return {
+        ...prev,
+        listByQuotation: {
+          date: new Date(),
+          list: listByQuotation.map(item => item.pair)
+        }
+      }
+    })
+
+  }, [quoteCurrencies, searchCurrencies]);
 
   /**
  * Filtra as moedas com base na posição próxima à linha inferior do indicador Bollinger Bands. 
@@ -80,20 +96,23 @@ const Currencies = ({ navigation }) => {
       (async () => {
         try {
           // Moedas a serem buscadas
-          const coinsToFetch = filteredCoins;
+          const coinsToFetch = listCoins.listByQuotation.list;
           const fetchedCoins = [];
 
+          console.log(coinsToFetch, '-----------------------XXXXXXXXXXXXXXXXXXXX')
+
           // Itera sobre as moedas para buscar informações
-          for (let i = 0; i < coinsToFetch.length; i += 50) {
-            const chunk = coinsToFetch.slice(i, i + 50);
+          for (let i = 0; i < coinsToFetch.length; i += 5) {
+            const chunk = coinsToFetch.slice(i, i + 5);
             // Busca as velas (candles) para cada moeda
             const updatedCoins = await Promise.all(
-              chunk.map(async coin => {
-                const fetchedCandles = await fetchCandles(coin.pair, 46, interval);
+              chunk.map(async symbol => {
+
+                const fetchedCandles = await fetchCandles(symbol, 46, interval);
                 const bollingerBands = calculateBollingerBands(20, fetchedCandles);
                 const candles = calculateRecentCandles(bollingerBands.upper.length, fetchedCandles);
 
-                return { ...coin, bollingerBands, candles };
+                return { symbol, bollingerBands, candles };
               })
             );
 
@@ -101,11 +120,17 @@ const Currencies = ({ navigation }) => {
             let sortedCoins = sortByBollingersLowerAndCandlesClose(fetchedCoins)
 
             // Adiciona as moedas atualizadas ao estado utilizando push
-            setFilteredCoins(sortedCoins);
+            setListCoins(prev => {
+              return {
+                ...prev,
+                listByBBIndicator: {
+                  date: new Date(),
+                  list: sortedCoins.map(item => item.symbol),
+                }
+              }
+            })
 
-            console.log(fetchedCoins.length)
-
-            if (i + 50 < coinsToFetch.length) {
+            if (i + 4 < coinsToFetch.length) {
               // Aguarda 3 segundos antes de fazer a próxima requisição
               await new Promise(resolve => setTimeout(resolve, 3000));
             }
@@ -119,38 +144,22 @@ const Currencies = ({ navigation }) => {
   }, [indicatorsCurrencies]);
 
 
-
-  // Teste
-  useEffect(() => {
-    // criação de objeto para teste no js fiddle
-    /*let sc = sortedCoins.map(sc => {
-      return {
-        bollingerBands: { lower: sc.bollingerBands.lower },
-        candles: sc.candles.map(c => { return { close: c.close } })
-      }
-    })*/
-
-    //console.log(JSON.stringify(sc))
-  }, [sortedCoins])
-
-
-
   return (
     <SafeAreaView style={styles.container}>
-     
-        <SearchCurrencies />
-        <Intervals />
-        <QuoteCurrencies />
-        <IndicatorsCurrencies />
-        {loading ? (
-          /* Show a loading indicator here if needed */
-          <Text>Loading...</Text>
-        ) : (
 
-          <FlatListCoins listCoins={filteredCoins} navigation={navigation} />
+      <SearchCurrencies />
+      <Intervals />
+      <QuoteCurrencies />
+      <IndicatorsCurrencies />
+      {loading ? (
+        /* Show a loading indicator here if needed */
+        <Text>Loading...</Text>
+      ) : (
 
-        )}
-      
+        <FlatListCoins listCoins={listCoins.list} navigation={navigation} />
+
+      )}
+
     </SafeAreaView>
   );
 };
