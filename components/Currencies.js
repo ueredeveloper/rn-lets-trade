@@ -37,9 +37,10 @@ const Currencies = ({ navigation }) => {
 
     fetchCoins();
 
+
+    console.log('useEff [], setListCoins')
+
   }, []);
-
-
 
   /**
    * Mudar o intervalo de pesquisa dos candles (1h, 2h, 1d, ...)
@@ -48,7 +49,7 @@ const Currencies = ({ navigation }) => {
     let interval = intervals.find(i => i.checked === true);
     setInterval(interval.name);
 
-    console.log('currencies , set interval')
+    console.log('useEff [intervals] setInverval')
   }, [intervals]);
 
   /**
@@ -63,7 +64,7 @@ const Currencies = ({ navigation }) => {
       const checked = quoteCurrencies.filter(crypto => crypto.checked);
       return checked.some(crypto => coin.pair.endsWith(crypto.name) && coin.pair.toLowerCase().indexOf(searchCurrencies.toLowerCase()) > -1);
     }));
-    console.log('currencias filter coins ')
+    console.log('useEf [quoteCurrencies, searchCurrencies] setFilterCoins  ')
 
   }, [listCoins, quoteCurrencies, searchCurrencies]);
 
@@ -111,16 +112,14 @@ const Currencies = ({ navigation }) => {
             fetchedCoins.push(...updatedCoins);
             let sortedCoins = sortByBollingersLowerAndCandlesClose(fetchedCoins)
 
-            console.log('sorted conins', sortedCoins)
-
             // Adiciona as moedas atualizadas ao estado utilizando push
             setFilteredCoins(sortedCoins);
 
            // console.log(fetchedCoins.length)
 
             if (i + 50 < coinsToFetch.length) {
-              // Aguarda 3 segundos antes de fazer a próxima requisição
-              await new Promise(resolve => setTimeout(resolve, 3000));
+              // Aguarda 2 segundos antes de fazer a próxima requisição
+              await new Promise(resolve => setTimeout(resolve, 2000));
             }
           }
 
@@ -129,24 +128,9 @@ const Currencies = ({ navigation }) => {
         }
       })();
     }
+
+    console.log('useEff [indicatorsCurrencies] ')
   }, [indicatorsCurrencies]);
-
-
-
-  // Teste
-  useEffect(() => {
-    // criação de objeto para teste no js fiddle
-    /*let sc = sortedCoins.map(sc => {
-      return {
-        bollingerBands: { lower: sc.bollingerBands.lower },
-        candles: sc.candles.map(c => { return { close: c.close } })
-      }
-    })*/
-
-    //console.log(JSON.stringify(sc))
-  }, [sortedCoins])
-
-
 
   return (
     <SafeAreaView style={styles.container}>
