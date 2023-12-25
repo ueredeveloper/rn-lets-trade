@@ -6,7 +6,7 @@ import { editCurrency, insertCurrency } from '../../services/db';
 
 const FavoritesButton = ({ pair }) => {
 
-  const { currencies } = useContext(OptionsCurrenciesContext);
+  const { dbCurrencies } = useContext(OptionsCurrenciesContext);
 
   const [currency, setCurrency] = useState({
     object: {
@@ -18,7 +18,7 @@ const FavoritesButton = ({ pair }) => {
 
   useEffect(() => {
 
-    const foundCurrency = currencies.find(c => pair === c.symbol);
+    const foundCurrency = dbCurrencies.find(c => pair === c.symbol);
 
     if (foundCurrency) {
       setCurrency(prev => {
@@ -38,8 +38,6 @@ const FavoritesButton = ({ pair }) => {
   const handleEditcurrency = () => {
 
     let _is = !currency.object.is_favorite;
-
-    console.log('handle is favorite ', _is)
 
     let _currency = {
       object: {

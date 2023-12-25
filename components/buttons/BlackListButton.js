@@ -2,12 +2,12 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useContext, useState, useEffect } from 'react';
 import { OptionsCurrenciesContext } from '../../context/OptionsCurrencyContext';
-import { editCurrency, insertCurrency } from '../../services/db';
+import { editCurrency, insertCurrency, listCurrencies } from '../../services/db';
 
 
 const BlackListButton = ({ pair }) => {
 
-  const { currencies } = useContext(OptionsCurrenciesContext);
+  const { dbCurrencies, setDbCurrencies } = useContext(OptionsCurrenciesContext);
 
   const [currency, setCurrency] = useState({
     object: {
@@ -18,11 +18,8 @@ const BlackListButton = ({ pair }) => {
   });
 
   useEffect(() => {
-
-    const foundCurrency = currencies.find(c => pair === c.symbol);
-
+    const foundCurrency = dbCurrencies.find(c => c.symbol === pair);
     if (foundCurrency) {
-      console.log('use eff found cu', foundCurrency.symbol)
       setCurrency(prev => {
         return {
           ...prev,
@@ -50,11 +47,36 @@ const BlackListButton = ({ pair }) => {
     setCurrency(_currency);
 
     if (currency.object.id !== null) {
-      editCurrency(_currency);
-    } else {
-      insertCurrency({ object: { symbol: pair, is_blacklisted: _isBlacklisted } });
-    }
 
+      editCurrency(_currency).then(response => {
+        //{"data": {"update_currency_by_pk": {"family_id": null, "id": 19, "is_blacklisted": true, "is_favorite": false, "symbol": "BCCUSDT"}}, "status": 200}
+        if (response.status === 200) {
+          setDbCurrencies(prevState => {
+            return prevState.map(coin => {
+              let obj = response.data.update_currency_by_pk;
+              if (coin.symbol === obj.symbol) {
+                setCurrency({ object: obj })
+                return obj;
+              }
+              return coin;
+            });
+          });
+        }
+      });
+
+    } else {
+      insertCurrency({ object: { symbol: pair, is_blacklisted: _isBlacklisted } }).then(
+        response => {
+          //{"insert_currency_one": {"family_id": null, "id": 73, "is_blacklisted": true, "is_favorite": null, "symbol": "CITYUSDT"}}, "status": 200}
+          if (response.status === 200) {
+            let obj = response.data.insert_currency_one;
+            setDbCurrencies(prevState => {
+              return [...prevState, obj]
+            });
+          }
+
+        });
+    }
   }
 
   return (

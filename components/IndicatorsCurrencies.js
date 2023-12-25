@@ -4,7 +4,7 @@ import { OptionsCurrenciesContext } from '../context/OptionsCurrencyContext'; //
 
 const IndicatorsCurrencies = () => {
     
-    const {indicatorsCurrencies, setIndicatorsCurrencies } = useContext(OptionsCurrenciesContext);
+    const {indicatorsCurrencies, setIndicatorsCurrencies, setListFilteredByIndicator } = useContext(OptionsCurrenciesContext);
 
     return (
         <View>
@@ -31,6 +31,8 @@ const IndicatorsCurrencies = () => {
                                     return i;
                                 })
                             );
+
+                            setListFilteredByIndicator([])
                         }}>
                         <Text
                             style={styles.text}

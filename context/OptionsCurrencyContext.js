@@ -1,5 +1,6 @@
-import React, { createContext, useState , useEffect} from "react";
+import React, { createContext, useState, useEffect } from "react";
 import { listCurrencies } from "../services/db";
+import { fetchAllCoins } from "../services/fetchAllCoins";
 
 
 const OptionsCurrenciesContext = createContext();
@@ -32,33 +33,95 @@ const OptionsCurrenciesProvider = ({ children }) => {
   const [searchCurrencies, setSearchCurrencies] = useState('');
 
   const [indicatorsCurrencies, setIndicatorsCurrencies] = useState([
-    { name: 'BolllingerBands', checked: false, },
+    { name: 'Bolllinger Bands', checked: false, },
     { name: 'RSI', checked: true, },
     { name: 'EFI', checked: false, },
-    { name: 'Candles', checked: false, },
+    { name: 'Candlesticks', checked: false, },
     { name: 'MacD', checked: false, },
   ])
 
-  const [filteredCoins, setFilteredCoins] = useState([]);
-  const [listCoins, setListCoins] = useState([]);
+  const [listAllCurrencies, setListAllCurrencies] = useState([]);
+  const [listFilteredByQuotation, setListFilteredByQuotation] = useState([]);
+  const [listFilteredByIndicator, setListFilteredByIndicator] = useState([])
 
-  const [currencies, setCurrencies] = useState([])
+  const [dbCurrencies, setDbCurrencies] = useState([]);
+
+  /**
+   * 
+   * @returns Busca moedas na plataforma Binance.
+   */
+  const _fetchBinanceCurrencies = async () => {
+    try {
+      const result = await fetchAllCoins();
+      return result;
+    } catch (error) {
+      console.error('Error fetching coins:', error);
+    }
+  }
+
+  /**
+   * Busca moedas no banco de dados (Favoritos, Blacklist, ...)
+   * 
+   */
+  const _fetchDbCurrencies = async () => {
+    let result = await listCurrencies();
+
+    if (result.error) {
+      // Handle error here
+      console.error('Error fetching data:', result.error);
+    } else {
+      return result.data.currency;
+    }
+
+  }
+
+  /**
+   * Reune as duas requisições, Binance e Bando NHost.
+   * @returns 
+   */
+  function executeAsyncFunctionsTogether() {
+    return Promise.all([_fetchDbCurrencies(), _fetchBinanceCurrencies()]);
+  }
 
   useEffect(() => {
-      const fetchData = async () => {
-          const result = await listCurrencies();
-          if (result.error) {
-              // Handle error here
-              console.error('Error fetching data:', result.error);
-          } else {
-              // Handle data here
-              setCurrencies(result.data.currency)
-          }
-      };
-
-      fetchData();
+    executeAsyncFunctionsTogether()
+      .then(results => {
+        // filtra moedas na lista negra escolhidas pelo usário e salvas no banco de dados.
+        let isBlackListed = results[0].filter(item => item.is_blacklisted).map(item => item.symbol);
+        // filtra as possíveis de negócio
+        let isWhiteListed = results[1].filter(c => !isBlackListed.includes(c.pair));
+        // seta as moedas filtradas.
+        setListAllCurrencies(isWhiteListed);
+        setDbCurrencies(results[0])
+      })
+      .catch(error => {
+        console.error('Error occurred:', error);
+      });
 
   }, []);
+
+  useEffect(() => {
+
+    let isBlackListed = dbCurrencies.filter(item => item.is_blacklisted).map(item => item.symbol);
+
+    let isWhiteListed = listAllCurrencies.filter(c => !isBlackListed.includes(c.pair)
+    );
+
+    setListAllCurrencies(isWhiteListed);
+
+  }, [dbCurrencies]);
+
+  useEffect(() => {
+
+    let filteredByQuotation = listAllCurrencies.filter(coin => {
+      const checked = quoteCurrencies.filter(qc => qc.checked);
+      return checked.some(crypto => coin.pair.endsWith(crypto.name));
+    });
+
+    setListFilteredByQuotation(filteredByQuotation);
+
+  }, [listAllCurrencies, quoteCurrencies]);
+
 
   return (
     <OptionsCurrenciesContext.Provider value={{
@@ -66,9 +129,10 @@ const OptionsCurrenciesProvider = ({ children }) => {
       intervals, setIntervals,
       searchCurrencies, setSearchCurrencies,
       indicatorsCurrencies, setIndicatorsCurrencies,
-      filteredCoins, setFilteredCoins,
-      listCoins, setListCoins, 
-      currencies, setCurrencies
+      listAllCurrencies, setListAllCurrencies,
+      listFilteredByQuotation, setListFilteredByQuotation,
+      listFilteredByIndicator, setListFilteredByIndicator,
+      dbCurrencies, setDbCurrencies
     }}>
       {children}
     </OptionsCurrenciesContext.Provider>

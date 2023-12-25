@@ -39,9 +39,12 @@ const BrowserScreen = ({ route, navigation }) => {
     }, [symbol]);
 
     useEffect(() => {
-        setPublished_Url(posts[0].dataCard.data.published_url);
-
-       // posts.slice(0,1).map(p=> console.log(JSON.stringify(p)))
+        console.log('posts !==0 ', posts.lengt!==0)
+        if (posts.lengt!==0) {
+            setPublished_Url(posts[0].dataCard.data.published_url);
+        }
+       
+        // posts.slice(0,1).map(p=> console.log(JSON.stringify(p)))
     }, [posts]);
 
     const _handleOpenWithWebBrowser = () => {
@@ -63,21 +66,14 @@ const BrowserScreen = ({ route, navigation }) => {
                     {posts.map((post, i) => {
                         return (
                             <Picker.Item
-                            key={`_posts`+ i}
+                                key={`_posts` + i}
                                 label={post.dataCard.author.username}
                                 value={post.dataCard.data.published_url}
                             />
                         );
                     })}
                 </Picker>
-
-                <Icon
-                    style={styles.icons}
-                    name="chrome"
-                    size={20}
-                    color="#000000"
-                    onPress={_handleOpenWithWebBrowser}
-                />
+                <Ionicons name="logo-chrome" size={24} color="black" onPress={_handleOpenWithWebBrowser} />
                 <Ionicons
                     style={styles.icons}
                     name="caret-back-outline"
