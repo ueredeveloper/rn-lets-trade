@@ -42,7 +42,8 @@ const OptionsCurrenciesProvider = ({ children }) => {
 
   const [listAllCurrencies, setListAllCurrencies] = useState([]);
   const [listFilteredByQuotation, setListFilteredByQuotation] = useState([]);
-  const [listFilteredByIndicator, setListFilteredByIndicator] = useState([])
+  const [listFilteredByIndicator, setListFilteredByIndicator] = useState([]);
+  const [listFilteredBySearch, setListFilteredBySearch] = useState([])
 
   const [dbCurrencies, setDbCurrencies] = useState([]);
 
@@ -132,6 +133,7 @@ const OptionsCurrenciesProvider = ({ children }) => {
       listAllCurrencies, setListAllCurrencies,
       listFilteredByQuotation, setListFilteredByQuotation,
       listFilteredByIndicator, setListFilteredByIndicator,
+      listFilteredBySearch, setListFilteredBySearch,
       dbCurrencies, setDbCurrencies
     }}>
       {children}
