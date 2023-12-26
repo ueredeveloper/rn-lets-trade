@@ -5,21 +5,35 @@ import { OptionsCurrenciesContext } from '../context/OptionsCurrencyContext';
 
 function SearchCurrencies() {
 
-    const [inputValue, setInputValue] = useState('');
+    const [textInput, setTextInput] = useState('');
     const textInputRef = useRef();
 
-    const { setSearchCurrencies } = useContext(OptionsCurrenciesContext);
+    const { filteredByQuotation, setFilteredCurrencies } = useContext(OptionsCurrenciesContext);
 
     const onPress = () => {
-        console.log('pressed button', inputValue)
+        console.log('pressed button', textInput)
     }
 
     const handleInputChange = (text) => {
         // Converter text digitado para maiúculo, ex: btc -> BTC
         const textToUpper = text.toUpperCase();
-        setInputValue(textToUpper);
-        setSearchCurrencies(textToUpper)
+        setTextInput(textToUpper);
+        //setSearchCurrencies(textToUpper)
+        const filtered = filteredByQuotation.list.filter((currency) => {
+            return currency.pair.toLowerCase().includes(text.toLowerCase())
+        }
+        );
+        setFilteredCurrencies(filtered);
+
     };
+
+    const handleOnPress = () => {
+        const filtered = filteredByQuotation.list.filter((currency) => {
+            return currency.pair.toLowerCase().includes(textInput.toLowerCase())
+        }
+        );
+        setFilteredCurrencies(filtered);
+    }
 
 
     return (
@@ -30,11 +44,11 @@ function SearchCurrencies() {
                 autoCapitalize="characters"
                 style={styles.input}
                 onChangeText={handleInputChange}
-                value={inputValue}
+                value={textInput}
                 placeholder='BTCUSDT'
 
             />
-            <TouchableOpacity style={styles.button} onPress={onPress}>
+            <TouchableOpacity style={styles.button} onPress={handleOnPress}>
                 <Ionicons name="search" size={24} color="black" />
             </TouchableOpacity>
         </View>

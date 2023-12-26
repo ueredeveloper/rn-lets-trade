@@ -7,7 +7,7 @@ import { editCurrency, insertCurrency, listCurrencies } from '../../services/db'
 
 const BlackListButton = ({ pair }) => {
 
-  const { dbCurrencies, setDbCurrencies } = useContext(OptionsCurrenciesContext);
+  const { dataBaseCurrencies, setDataBaseCurrencies } = useContext(OptionsCurrenciesContext);
 
   const [currency, setCurrency] = useState({
     object: {
@@ -18,7 +18,7 @@ const BlackListButton = ({ pair }) => {
   });
 
   useEffect(() => {
-    const foundCurrency = dbCurrencies.find(c => c.symbol === pair);
+    const foundCurrency = dataBaseCurrencies.find(c => c.symbol === pair);
     if (foundCurrency) {
       setCurrency(prev => {
         return {
@@ -51,7 +51,7 @@ const BlackListButton = ({ pair }) => {
       editCurrency(_currency).then(response => {
         //{"data": {"update_currency_by_pk": {"family_id": null, "id": 19, "is_blacklisted": true, "is_favorite": false, "symbol": "BCCUSDT"}}, "status": 200}
         if (response.status === 200) {
-          setDbCurrencies(prevState => {
+          setDataBaseCurrencies(prevState => {
             return prevState.map(coin => {
               let obj = response.data.update_currency_by_pk;
               if (coin.symbol === obj.symbol) {
@@ -70,7 +70,7 @@ const BlackListButton = ({ pair }) => {
           //{"insert_currency_one": {"family_id": null, "id": 73, "is_blacklisted": true, "is_favorite": null, "symbol": "CITYUSDT"}}, "status": 200}
           if (response.status === 200) {
             let obj = response.data.insert_currency_one;
-            setDbCurrencies(prevState => {
+            setDataBaseCurrencies(prevState => {
               return [...prevState, obj]
             });
           }

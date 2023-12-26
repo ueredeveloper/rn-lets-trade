@@ -6,7 +6,42 @@ import { OptionsCurrenciesContext } from "../context/OptionsCurrencyContext";
 
 const QuoteCurrencies = () => {
 
-    const { quoteCurrencies, setQuoteCurrencies } = useContext(OptionsCurrenciesContext);
+    const { binanceCurrencies, setFilteredByQuotation, setFilteredCurrencies } = useContext(OptionsCurrenciesContext);
+
+    const [quoteCurrencies, setQuoteCurrencies] = useState([
+        { name: 'USDT', checked: true },
+        { name: 'BTC', checked: false },
+        { name: 'BNB', checked: false },
+        { name: 'ETH', checked: false },
+        { name: 'BRL', checked: false },
+    ]);
+
+    const handle = (item) => {
+
+        let quote = item.name;
+
+        setQuoteCurrencies(
+            [...quoteCurrencies].map((i) => {
+                if (i.checked === true) {
+                    i.checked = false;
+                }
+                if (i.name === item.name) {
+                    i.checked = true;
+                }
+                return i;
+            })
+        );
+
+        let filtered = binanceCurrencies.filter(currency => {
+            return currency.pair.endsWith(quote)
+        });
+
+        setFilteredByQuotation({
+            quote: quote,
+            list: filtered
+        });
+        setFilteredCurrencies(filtered);
+    }
 
     return (
         <View>
@@ -22,25 +57,10 @@ const QuoteCurrencies = () => {
                     <TouchableOpacity
                         style={styles.button}
                         onPress={() => {
-                            setQuoteCurrencies(
-                                [...quoteCurrencies].map((i) => {
-                                    if (i.checked === true) {
-                                        i.checked = false;
-                                    }
-                                    if (i.name === item.name) {
-                                        i.checked = true;
-                                    }
-                                    return i;
-                                })
-                            );
+                            handle(item)
                         }}>
                         <Text
-                            style={styles.text}
-                            /*style={
-                                item.checked
-                                    ? tailwind('text-red-500')
-                                    : tailwind('text-gray-500')
-                            }*/>
+                            style={[styles.text, item.checked ? { color: "red" } : { color: "#666" }]}>
                             {item.name}
                         </Text>
                     </TouchableOpacity>

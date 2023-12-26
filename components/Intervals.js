@@ -4,7 +4,7 @@ import { OptionsCurrenciesContext } from '../context/OptionsCurrencyContext'; //
 
 const Intervals = () => {
 
-    const {intervals, setIntervals } = useContext(OptionsCurrenciesContext);
+    const { intervals, setIntervals } = useContext(OptionsCurrenciesContext);
 
     return (
         <View>
@@ -56,13 +56,13 @@ const styles = StyleSheet.create({
     button: {
         minHeight: 40,
         minWidth: 40,
-        backgroundColor:'rgb(210, 215, 211);, 1',
+        backgroundColor: 'rgb(210, 215, 211);, 1',
         padding: 10,
     },
     text: {
-        minWidth: 50, 
+        minWidth: 50,
         textAlign: "center"
-        
+
     }
 })
 
