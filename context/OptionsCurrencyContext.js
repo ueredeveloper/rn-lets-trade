@@ -55,7 +55,7 @@ const OptionsCurrenciesProvider = ({ children }) => {
    * Busca moedas no banco de dados (Favoritos, Blacklist, ...)
    * 
    */
-  const _fetchdataBaseCurrencies = async () => {
+  const _fetchDataBaseCurrencies = async () => {
     let result = await listCurrencies();
 
     if (result.error) {
@@ -72,7 +72,7 @@ const OptionsCurrenciesProvider = ({ children }) => {
    * @returns 
    */
   function executeAsyncFunctionsTogether() {
-    return Promise.all([_fetchdataBaseCurrencies(), _fetchBinanceCurrencies()]);
+    return Promise.all([_fetchDataBaseCurrencies(), _fetchBinanceCurrencies()]);
   }
 
   useEffect(() => {
@@ -82,13 +82,14 @@ const OptionsCurrenciesProvider = ({ children }) => {
         let isBlackListed = results[0].filter(item => item.is_blacklisted).map(item => item.symbol);
         // filtra as possíveis de negócio
         let isWhiteListed = results[1].filter(c => !isBlackListed.includes(c.pair));
-        // seta as moedas filtradas.
+        // seta as moedas binance filtradas, sem blacklist.
         setBinanceCurrencies(isWhiteListed);
+        // Seta moedas puxadas do banco de dados
         setDataBaseCurrencies(results[0])
 
         let quote = 'USDT';
         let filtered = isWhiteListed.filter(currency => {
-          return currency.pair.toLocaleLowerCase().endsWith(quote.toLocaleLowerCase())
+          return currency.pair.endsWith(quote)
         });
 
         setFilteredByQuotation({
@@ -104,17 +105,6 @@ const OptionsCurrenciesProvider = ({ children }) => {
       });
 
   }, []);
-
-  useEffect(() => {
-
-    let isBlackListed = dataBaseCurrencies.filter(item => item.is_blacklisted).map(item => item.symbol);
-
-    let isWhiteListed = binanceCurrencies.filter(c => !isBlackListed.includes(c.pair)
-    );
-
-    setBinanceCurrencies(isWhiteListed);
-
-  }, [dataBaseCurrencies]);
 
   return (
     <OptionsCurrenciesContext.Provider value={{
