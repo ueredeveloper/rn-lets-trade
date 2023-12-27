@@ -3,6 +3,7 @@ import { AntDesign } from '@expo/vector-icons';
 
 const BollingerBandsButton = () => {
 
+  
   const handleEditcurrency = () => {
     console.log('up')
   }

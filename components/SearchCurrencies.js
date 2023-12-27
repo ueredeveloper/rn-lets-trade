@@ -5,6 +5,7 @@ import { OptionsCurrenciesContext } from '../context/OptionsCurrencyContext';
 
 function SearchCurrencies() {
 
+    
     const [textInput, setTextInput] = useState('');
     const textInputRef = useRef();
 

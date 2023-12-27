@@ -249,9 +249,6 @@ function CandlestickBandsChart({ symbol, interval }) {
     createChart();
   }, [chartData]);
 
-
-
-
   return (
     <View style={styles.container}>
       <SkiaChart ref={skiaRef} />

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, ScrollView } from 'react-native';
 import { BlackListButton, BollingerBandsButton, FavoritesButton, WebAnalyticsButton } from './buttons'
 
+
 const CoinInfo = ({ navigation, pair, price }) => {
     return (
         <View style={styles.container}>
@@ -12,7 +13,7 @@ const CoinInfo = ({ navigation, pair, price }) => {
             <ScrollView horizontal={true}>
                 <BollingerBandsButton />
                 <FavoritesButton pair={pair} />
-                <BlackListButton pair={pair}/>
+                <BlackListButton pair={pair} />
                 <WebAnalyticsButton navigation={navigation} pair={pair} />
             </ScrollView>
         </View>

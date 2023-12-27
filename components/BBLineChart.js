@@ -10,7 +10,6 @@ import {
 } from 'react-native-chart-kit';
 import { calculateBollingerBands } from '../utilities/calculateBollingerBands';
 
-
 import { fetchCandles } from '../services/fetchCandles';
 import { bollingerbands } from 'technicalindicators';
 

@@ -3,6 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 const WebAnalyticsButton = ({ navigation, pair }) => {
 
+  
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={() => {

@@ -4,7 +4,6 @@ import { useContext, useState, useEffect } from 'react';
 import { OptionsCurrenciesContext } from '../../context/OptionsCurrencyContext';
 import { editCurrency, insertCurrency, listCurrencies } from '../../services/db';
 
-
 const BlackListButton = ({ pair }) => {
 
   const { dataBaseCurrencies, setDataBaseCurrencies, filteredCurrencies,  setFilteredCurrencies } = useContext(OptionsCurrenciesContext);

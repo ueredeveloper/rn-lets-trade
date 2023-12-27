@@ -9,6 +9,7 @@ import IndicatorsCurrencies from './IndicatorsCurrencies';
 
 const Currencies = ({ navigation }) => {
 
+  
   const [loading, setLoading] = useState(true);
   const { filteredCurrencies } = useContext(OptionsCurrenciesContext);
 

@@ -7,6 +7,7 @@ import * as WebBrowser from 'expo-web-browser';
 import { Ionicons } from '@expo/vector-icons';
 import { getCoinPosts } from '../services/fetchPosts';
 
+
 const BrowserScreen = ({ route, navigation }) => {
     const { symbol } = route.params;
 

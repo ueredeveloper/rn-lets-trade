@@ -6,6 +6,8 @@ import { editCurrency, insertCurrency } from '../../services/db';
 
 const FavoritesButton = ({ pair }) => {
 
+
+  
   const { dataBaseCurrencies, setDataBaseCurrencies, filteredCurrencies,  setFilteredCurrencies } = useContext(OptionsCurrenciesContext);
 
 

@@ -9,8 +9,6 @@ import { sortByBollingersLowerAndCandlesClose } from "../utilities/sortByBolling
 
 const IndicatorsCurrencies = () => {
 
-    //const {indicatorsCurrencies, setIndicatorsCurrencies, setListFilteredByIndicator } = useContext(OptionsCurrenciesContext);
-
     const [indicatorsCurrencies, setIndicatorsCurrencies] = useState([
         { name: 'Bolllinger Bands', checked: false, },
         { name: 'RSI', checked: true, },
@@ -126,7 +124,7 @@ const IndicatorsCurrencies = () => {
                             handle(item)
                         }}>
                         <Text
-                            style={[styles.text, item.checked? {color: "red"}: {color: "black"}]}
+                            style={[styles.text, item.checked ? { color: "red" } : { color: "black" }]}
                             /*style={
                                 item.checked
                                     ? tailwind('text-red-500')

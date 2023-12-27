@@ -11,7 +11,6 @@ import BBLineChart from './BBLineChart';
 import { OptionsCurrenciesContext } from '../context/OptionsCurrencyContext';
 import { CandlestickBandsChart } from './CandlestickBandsChart';
 
-
 const CustomAnimatedAccordion = ({ symbol }) => {
 
     const [expanded, setExpanded] = useState(false);

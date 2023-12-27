@@ -7,6 +7,7 @@ import { OptionsCurrenciesContext } from '../context/OptionsCurrencyContext';
 import { View } from 'react-native';
 import FlatListCoins from '../components/FlatListCoins';
 
+
 const Tab1 = createBottomTabNavigator();
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';

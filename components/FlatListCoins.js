@@ -5,6 +5,7 @@ import CustomAnimatedAccordion from './CustomAnimatedAccordion';
 
 const FlatListCoins = ({ listCoins, navigation }) => {
 
+    
     const renderAccordionItem = ({ item }) => (
         <>
             <CoinInfo navigation={navigation} pair={item.pair} price={item.price} />

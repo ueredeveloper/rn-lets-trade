@@ -37,9 +37,9 @@ const OptionsCurrenciesProvider = ({ children }) => {
   const [filteredCurrencies, setFilteredCurrencies] = useState([]);
   const [filteredByFavorites, setFilteredByFavorites] = useState([]);
   const [filteredByBlackListeds, setfilteredByBlackListeds] = useState([])
-
   const [dataBaseCurrencies, setDataBaseCurrencies] = useState([]);
 
+  
   /**
    * 
    * @returns Busca moedas na plataforma Binance.
