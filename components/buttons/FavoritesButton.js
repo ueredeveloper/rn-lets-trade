@@ -6,7 +6,8 @@ import { editCurrency, insertCurrency } from '../../services/db';
 
 const FavoritesButton = ({ pair }) => {
 
-  const { dataBaseCurrencies } = useContext(OptionsCurrenciesContext);
+  const { dataBaseCurrencies, setDataBaseCurrencies, filteredCurrencies,  setFilteredCurrencies } = useContext(OptionsCurrenciesContext);
+
 
   const [currency, setCurrency] = useState({
     object: {
@@ -37,20 +38,50 @@ const FavoritesButton = ({ pair }) => {
 
   const handleEditcurrency = () => {
 
-    let _is = !currency.object.is_favorite;
+    let _isFavorite = !currency.object.is_favorite;
 
     let _currency = {
       object: {
         id: currency.object.id,
-        is_favorite: _is
+        is_favorite: _isFavorite
       }
     }
     setCurrency(_currency);
 
-    if (currency.object.id !== null) {
-      editCurrency(_currency);
+    if (_currency.object.id !== null) {
+      editCurrency(_currency).then(response=>{
+        if (response.status===200){
+          //ex: {"data": {"update_currency_by_pk": {"family_id": null, "id": 279, "is_blacklisted": false, "is_favorite": true, "symbol": "ETHUSDT"}}, "status": 200}
+       
+          let obj = response.data.update_currency_by_pk;
+          setDataBaseCurrencies(prevState => {
+            return prevState.map(coin => {
+
+              if (coin.symbol === obj.symbol) {
+                setCurrency({ object: obj })
+                return obj;
+              }
+              return coin;
+            });
+          });
+       
+        }
+      });
     } else {
-      insertCurrency({ object: { symbol: pair, is_favorite: _is } });
+      insertCurrency({ object: { symbol: pair, is_favorite: _isFavorite } }).then(
+        response => {
+          //{"insert_currency_one": {"family_id": null, "id": 73, "is_blacklisted": true, "is_favorite": null, "symbol": "CITYUSDT"}}, "status": 200}
+          if (response.status === 200) {
+            let obj = response.data.insert_currency_one;
+            setDataBaseCurrencies(prevState => {
+              return [...prevState, obj]
+            });
+           // let isWhiteListed = filteredCurrencies.list.filter(c => c.pair !== obj.symbol);
+
+           // setFilteredCurrencies(isWhiteListed)
+          }
+
+        });
     }
 
   }

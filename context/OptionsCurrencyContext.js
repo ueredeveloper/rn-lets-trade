@@ -35,6 +35,8 @@ const OptionsCurrenciesProvider = ({ children }) => {
   });
 
   const [filteredCurrencies, setFilteredCurrencies] = useState([]);
+  const [filteredByFavorites, setFilteredByFavorites] = useState([]);
+  const [filteredByBlackListeds, setfilteredByBlackListeds] = useState([])
 
   const [dataBaseCurrencies, setDataBaseCurrencies] = useState([]);
 
@@ -78,33 +80,57 @@ const OptionsCurrenciesProvider = ({ children }) => {
   useEffect(() => {
     executeAsyncFunctionsTogether()
       .then(results => {
-        // filtra moedas na lista negra escolhidas pelo usário e salvas no banco de dados.
-        let isBlackListed = results[0].filter(item => item.is_blacklisted).map(item => item.symbol);
-        // filtra as possíveis de negócio
-        let isWhiteListed = results[1].filter(c => !isBlackListed.includes(c.pair));
-        // seta as moedas binance filtradas, sem blacklist.
-        setBinanceCurrencies(isWhiteListed);
+        // Filtra moedas na lista negra escolhidas pelo usário e salvas no banco de dados.
+        let _isBlackListeds = results[0].filter(item => item.is_blacklisted).map(item => item.symbol);
+        let _isFavorites = results[0].filter(item => item.is_favorite).map(item => item.symbol);
+
+        console.log('op c s ', _isFavorites)
         // Seta moedas puxadas do banco de dados
         setDataBaseCurrencies(results[0])
+        // seta as moedas binance.
+        setBinanceCurrencies(results[1]);
 
-        let quote = 'USDT';
-        let filtered = isWhiteListed.filter(currency => {
-          return currency.pair.endsWith(quote)
+        // Filtra por cotação, por padrão USDT.
+        let _filteredByQuotation = results[1].filter(currency => {
+          return currency.pair.endsWith('USDT')
         });
 
         setFilteredByQuotation({
-          quote: quote,
-          list: filtered
-        }
-        )
+          quote: 'USDT',
+          list: _filteredByQuotation
+        });
+        // Filtra por quotação (USDT, BRL, ...) e remove lista negra de moedas.
+        let _filtereByQuotatoinAndWhiteList = _filteredByQuotation.filter(c => !_isBlackListeds.includes(c.pair));
 
-        setFilteredCurrencies(filtered)
+        setFilteredCurrencies(_filtereByQuotatoinAndWhiteList);
+
+        let _filteredByQuotationAndFavorites = _filteredByQuotation.filter(c => _isFavorites.includes(c.pair));
+
+        setFilteredByFavorites(_filteredByQuotationAndFavorites);
+
+        let _filteredByQuotationAndBlackListed = _filteredByQuotation.filter(c => _isBlackListeds.includes(c.pair));
+
+        setfilteredByBlackListeds(_filteredByQuotationAndBlackListed);
+
       })
       .catch(error => {
         console.error('Error occurred:', error);
       });
 
   }, []);
+
+  useEffect(() => {
+
+    let dbFavorites = dataBaseCurrencies.filter(item => item.is_favorite).map(item => item.symbol);
+    let filteredByFavoritesAndQuotation = filteredByQuotation.list.filter(c => dbFavorites.includes(c.pair));
+    setFilteredByFavorites(filteredByFavoritesAndQuotation);
+
+    let dbBlacklisteds = dataBaseCurrencies.filter(item => item.is_blacklisted).map(item => item.symbol);
+    let filteredByBlackListedsAndQuotation = filteredByQuotation.list.filter(c => dbBlacklisteds.includes(c.pair));
+
+    setfilteredByBlackListeds(filteredByBlackListedsAndQuotation);
+
+  }, [filteredByQuotation, dataBaseCurrencies]);
 
   return (
     <OptionsCurrenciesContext.Provider value={{
@@ -113,6 +139,8 @@ const OptionsCurrenciesProvider = ({ children }) => {
       filteredByQuotation, setFilteredByQuotation,
       filteredByIndicator, setFilteredByIndicator,
       dataBaseCurrencies, setDataBaseCurrencies,
+      filteredByFavorites, setFilteredByFavorites,
+      filteredByBlackListeds, setfilteredByBlackListeds,
       filteredCurrencies, setFilteredCurrencies
     }}>
       {children}

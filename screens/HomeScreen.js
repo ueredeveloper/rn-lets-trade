@@ -1,26 +1,34 @@
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Currencies, SettingsView } from '../components';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import FavoriteScreen from './FavoritesScreen';
-import { OptionsCurrenciesProvider } from '../context/OptionsCurrencyContext';
+import { Ionicons } from '@expo/vector-icons';
+import { OptionsCurrenciesContext } from '../context/OptionsCurrencyContext';
+import { View } from 'react-native';
+import FlatListCoins from '../components/FlatListCoins';
 
-const Tab = createBottomTabNavigator();
+const Tab1 = createBottomTabNavigator();
+
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+
+const Tab2 = createMaterialTopTabNavigator();
 
 function HomeScreen({ navigation }) {
+
+    const { filteredByFavorites, filteredByBlackListeds } = useContext(OptionsCurrenciesContext);
+
     return (
-        <Tab.Navigator
+        <Tab1.Navigator
             screenOptions={({ route }) => ({
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName;
 
-                    if (route.name === 'List Coins') {
+                    if (route.name === 'Lista de Moedas') {
                         iconName = focused ? 'home-outline' : 'home';
-                    } else if (route.name === 'Settings View') {
+                    } else if (route.name === 'Preferências') {
                         iconName = focused ? 'settings-outline' : 'settings';
                     }
-                    else if (route.name === 'Favorites') {
+                    else if (route.name === 'Favoritos') {
                         iconName = focused ? 'bookmark-outline' : 'bookmark';
                     }
 
@@ -31,14 +39,31 @@ function HomeScreen({ navigation }) {
                 tabBarInactiveTintColor: 'gray',
                 headerShown: false,
             })}>
-                <Tab.Screen name="List Coins" children={() => (
-                <OptionsCurrenciesProvider><Currencies navigation={navigation} /></OptionsCurrenciesProvider>
+            <Tab1.Screen name="Lista de Moedas" children={() => (
+                <Currencies navigation={navigation} />
             )} />
-            <Tab.Screen name="Favorites" component={FavoriteScreen} />
-            
-            <Tab.Screen name="Settings View" component={SettingsView} />
-            
-        </Tab.Navigator>
+            <Tab1.Screen name="Favoritos" children={() => (
+                <View style={{ flex: 1, }}>
+                    <Tab2.Navigator>
+                        <Tab2.Screen
+                            name="Favoritos"
+                            children={() => (
+                                <FlatListCoins listCoins={filteredByFavorites} navigation={navigation} />)}
+                        />
+                        <Tab2.Screen
+                            name="Lista Negra"
+                            children={() => (
+                                <FlatListCoins listCoins={filteredByBlackListeds} navigation={navigation} />
+                            )}
+                        />
+                    </Tab2.Navigator>
+                </View>
+
+            )} />
+
+            <Tab1.Screen name="Preferências" component={SettingsView} />
+
+        </Tab1.Navigator>
     );
 }
 

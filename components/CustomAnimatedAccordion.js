@@ -6,7 +6,7 @@ import {
     Animated,
     Text,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Ionicons } from '@expo/vector-icons';
 import BBLineChart from './BBLineChart';
 import { OptionsCurrenciesContext } from '../context/OptionsCurrencyContext';
 import { CandlestickBandsChart } from './CandlestickBandsChart';
@@ -60,8 +60,9 @@ const CustomAnimatedAccordion = ({ symbol }) => {
         <View>
             <TouchableOpacity style={styles.button} onPress={toggleAccordion}>
                 <View>
-                    <Icon
-                        name={expanded ? 'expand-less' : 'expand-more'}
+                    <Ionicons
+                    
+                        name={expanded ? 'caret-up-outline' : 'caret-down-outline'}
                         size={20}
                         style={styles.icon}
                     />

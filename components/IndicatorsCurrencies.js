@@ -19,7 +19,7 @@ const IndicatorsCurrencies = () => {
         { name: 'MacD', checked: false, },
     ])
 
-    const { filteredByQuotation, setFilteredCurrencies, intervals } = useContext(OptionsCurrenciesContext);
+    const { filteredCurrencies, setFilteredCurrencies, intervals } = useContext(OptionsCurrenciesContext);
 
     const [interval, setInterval] = useState('1d');
 
@@ -54,7 +54,7 @@ const IndicatorsCurrencies = () => {
             (async () => {
                 try {
                     // Moedas a serem buscadas
-                    const coinsToFetch = filteredByQuotation.list;
+                    const coinsToFetch = filteredCurrencies;
 
                     /*binanceCurrencies.filter(coin => {
                       const checked = quoteCurrencies.filter(qc => qc.checked);

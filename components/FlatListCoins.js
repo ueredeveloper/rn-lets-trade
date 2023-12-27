@@ -1,13 +1,9 @@
-import { useContext, useEffect } from 'react';
+
 import { StyleSheet, FlatList } from 'react-native';
 import CoinInfo from './CoinInfo';
 import CustomAnimatedAccordion from './CustomAnimatedAccordion';
-import { OptionsCurrenciesContext } from '../context/OptionsCurrencyContext';
-
 
 const FlatListCoins = ({ listCoins, navigation }) => {
-
-    const { intervals, setIntervals } = useContext(OptionsCurrenciesContext);
 
     const renderAccordionItem = ({ item }) => (
         <>

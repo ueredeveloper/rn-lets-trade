@@ -7,7 +7,7 @@ import { editCurrency, insertCurrency, listCurrencies } from '../../services/db'
 
 const BlackListButton = ({ pair }) => {
 
-  const { dataBaseCurrencies, setDataBaseCurrencies, filteredByQuotation, setFilteredByQuotation, setFilteredCurrencies } = useContext(OptionsCurrenciesContext);
+  const { dataBaseCurrencies, setDataBaseCurrencies, filteredCurrencies,  setFilteredCurrencies } = useContext(OptionsCurrenciesContext);
 
   const [currency, setCurrency] = useState({
     object: {
@@ -46,7 +46,7 @@ const BlackListButton = ({ pair }) => {
     }
     setCurrency(_currency);
 
-    if (currency.object.id !== null) {
+    if (_currency.object.id !== null) {
 
       editCurrency(_currency).then(response => {
         //{"data": {"update_currency_by_pk": {"family_id": null, "id": 19, "is_blacklisted": true, "is_favorite": false, "symbol": "BCCUSDT"}}, "status": 200}
@@ -64,14 +64,7 @@ const BlackListButton = ({ pair }) => {
             });
           });
 
-          let isWhiteListed = filteredByQuotation.list.filter(c => c.pair !== obj.symbol);
-
-          setFilteredByQuotation(prev => {
-            return {
-              ...prev,
-              list: isWhiteListed
-            }
-          });
+          let isWhiteListed = filteredCurrencies.filter(c => c.pair !== obj.symbol);
 
           setFilteredCurrencies(isWhiteListed)
         }
@@ -86,14 +79,7 @@ const BlackListButton = ({ pair }) => {
             setDataBaseCurrencies(prevState => {
               return [...prevState, obj]
             });
-            let isWhiteListed = filteredByQuotation.list.filter(c => c.pair !== obj.symbol);
-
-            setFilteredByQuotation(prev => {
-              return {
-                ...prev,
-                list: isWhiteListed
-              }
-            });
+            let isWhiteListed = filteredCurrencies.filter(c => c.pair !== obj.symbol);
 
             setFilteredCurrencies(isWhiteListed)
           }

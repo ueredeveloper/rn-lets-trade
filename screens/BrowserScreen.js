@@ -4,9 +4,7 @@ import { Picker } from '@react-native-picker/picker';
 import Constants from 'expo-constants';
 import { WebView } from 'react-native-webview';
 import * as WebBrowser from 'expo-web-browser';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 import { Ionicons } from '@expo/vector-icons';
-
 import { getCoinPosts } from '../services/fetchPosts';
 
 const BrowserScreen = ({ route, navigation }) => {
