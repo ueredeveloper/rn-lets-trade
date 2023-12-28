@@ -40,9 +40,10 @@ function HomeScreen({ navigation }) {
                 tabBarInactiveTintColor: 'gray',
                 headerShown: false,
             })}>
-            <Tab1.Screen name="Moedas" children={() => (
-                <Currencies navigation={navigation} />
-            )} />
+            <Tab1.Screen name="Moedas"
+                children={() => (
+                    <Currencies navigation={navigation} />
+                )} />
             <Tab1.Screen name="Favoritos e Lista Negra" children={() => (
                 <View style={{ flex: 1, }}>
                     <Tab2.Navigator>
