@@ -24,12 +24,12 @@ function HomeScreen({ navigation }) {
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName;
 
-                    if (route.name === 'Lista de Moedas') {
+                    if (route.name === 'Moedas') {
                         iconName = focused ? 'home-outline' : 'home';
                     } else if (route.name === 'Preferências') {
                         iconName = focused ? 'settings-outline' : 'settings';
                     }
-                    else if (route.name === 'Favoritos') {
+                    else if (route.name === 'Favoritos e Lista Negra') {
                         iconName = focused ? 'bookmark-outline' : 'bookmark';
                     }
 
@@ -40,10 +40,10 @@ function HomeScreen({ navigation }) {
                 tabBarInactiveTintColor: 'gray',
                 headerShown: false,
             })}>
-            <Tab1.Screen name="Lista de Moedas" children={() => (
+            <Tab1.Screen name="Moedas" children={() => (
                 <Currencies navigation={navigation} />
             )} />
-            <Tab1.Screen name="Favoritos" children={() => (
+            <Tab1.Screen name="Favoritos e Lista Negra" children={() => (
                 <View style={{ flex: 1, }}>
                     <Tab2.Navigator>
                         <Tab2.Screen

@@ -84,7 +84,6 @@ const OptionsCurrenciesProvider = ({ children }) => {
         let _isBlackListeds = results[0].filter(item => item.is_blacklisted).map(item => item.symbol);
         let _isFavorites = results[0].filter(item => item.is_favorite).map(item => item.symbol);
 
-        console.log('op c s ', _isFavorites)
         // Seta moedas puxadas do banco de dados
         setDataBaseCurrencies(results[0])
         // seta as moedas binance.
