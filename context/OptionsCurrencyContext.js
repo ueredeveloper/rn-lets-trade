@@ -16,9 +16,9 @@ const OptionsCurrenciesProvider = ({ children }) => {
     { name: '2h', checked: false },
     { name: '4h', checked: false },
     { name: '6h', checked: false },
-    { name: '8h', checked: false },
+    { name: '8h', checked: true }, // padrão 8 horas
     { name: '12h', checked: false },
-    { name: '1d', checked: true },
+    { name: '1d', checked: false },
     { name: '3d', checked: false },
     { name: '1w', checked: false },
     { name: '1M', checked: false },

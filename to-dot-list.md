@@ -12,5 +12,11 @@
 - [] Hooks - FilteredByQuotation
     - Verificar se é possível ser simplesmente uma array, não um objecto com array `{quote: '', list: []}` -> `[]`.
 
-- [] Header
+- [X] Header
     - Retitrar o cabeçalho, `options={{ headerShown: false }}`.
+        - 28/12/2023
+
+### 28 de dezembro de 2023
+
+- [] Coleções
+    - Melhorar a lista de favoritos, blacklisteds, etc. Adicionar famílias de moedas, moedas em estudo e outras, talvez em um só hooks.
