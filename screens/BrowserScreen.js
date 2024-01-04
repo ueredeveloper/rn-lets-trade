@@ -30,22 +30,29 @@ const BrowserScreen = ({ route, navigation }) => {
     ]);
 
     useEffect(() => {
-        getCoinPosts(symbol).then((data) =>
-            setPosts(
-                data.posts.sort(function (a, b) {
-                    // ordenar pelas postagens mais recentes
-                    return b.date - a.date;
-                })
-            )
-        );
+
+        (async () => {
+
+            await getCoinPosts(symbol).then((data) =>
+                setPosts(
+                    data.posts.sort(function (a, b) {
+                        // ordenar pelas postagens mais recentes
+                        return b.date - a.date;
+                    })
+                )
+            );
+
+        })()
+
     }, [symbol]);
 
     useEffect(() => {
-        console.log('posts !==0 ', posts.lengt!==0)
-        if (posts.lengt!==0) {
+        if (posts.lengt !== 0) {
             setPublished_Url(posts[0].dataCard.data.published_url);
+        } else {
+            console.log('error, post len ', posts.lengt)
         }
-       
+
         // posts.slice(0,1).map(p=> console.log(JSON.stringify(p)))
     }, [posts]);
 

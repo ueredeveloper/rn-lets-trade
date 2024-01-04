@@ -15,8 +15,7 @@ function CurrencyCollection({ currency, collections }) {
     });
 
     return (
-        <ScrollView horizontal={true}>
-             {/*console.log('currency collection render')*/}
+        <ScrollView horizontal={true} style={{ paddingTop: 15, paddingBottom: 15 }}>
             {collections.map((collection, i) => (
                 <Collection key={`collection_${i}`} selectedCurrency={selectedCurrency} setSelectedCurrency={setSelectedCurrency} collection={collection} />
             ))}

@@ -3,8 +3,11 @@ import { View, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { OptionsCurrenciesContext } from '../context/OptionsCurrencyContext';
 import { BollingerBandsChart } from './BollingerBandsChart';
+import InfoCurrency from './InfoCurrency';
+import CurrencyCollection from './CurrencyCollections';
+import WebAnalyticsButton from './buttons/WebAnalyticsButton';
 
-const CustomAnimatedAccordion = ({ symbol }) => {
+const CustomAnimatedAccordion = ({ navigation, currency, collections }) => {
 
     // ListCurrencies -> CustomAnimatedAccordion
 
@@ -63,7 +66,9 @@ const CustomAnimatedAccordion = ({ symbol }) => {
             </TouchableOpacity>
             {expanded ? (
                 <Animated.View style={[styles.content, animatedStyle]}>
-                    <BollingerBandsChart symbol={symbol} interval={interval} />
+                    <CurrencyCollection currency={currency} collections={collections} />
+                    <BollingerBandsChart symbol={currency.symbol} interval={interval} />
+                    <WebAnalyticsButton navigation={navigation} symbol={currency.symbol}/>
                 </Animated.View>
 
             ) : (<View></View>)}
@@ -86,7 +91,7 @@ const styles = StyleSheet.create({
         marginTop: 0,
         paddingHorizontal: 0,
         paddingVertical: 0,
-    },
+    }
 });
 
 export default CustomAnimatedAccordion;

@@ -3,7 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 const WebAnalyticsButton = ({ navigation, symbol }) => {
 
-  
+
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={() => {
@@ -20,18 +20,20 @@ const WebAnalyticsButton = ({ navigation, symbol }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginLeft: 5,
-    marginRight: 5,
+   flex: 1
   },
   button: {
-    flex: 1, placeContent: 'stretch'
+    padding: 10,
+    alignSelf: 'flex-end'
   },
-  text: { fontSize: 10, marginLeft: 5, marginRight: 5 },
+  text: {
+    fontSize: 10,
+    marginLeft: 5,
+    marginRight: 5
+  },
   buttonContent: {
-    flex: 1,
-    alignItems: 'center',
-    placeContent: 'stretch',
-    flexDirection: 'row',
+    alignItems: 'center', /* text e ícone centralizado verticalmente */
+    flexDirection: 'row', /* texto e ícone na horizontal*/
   }
 });
 

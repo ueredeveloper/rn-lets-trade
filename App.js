@@ -9,7 +9,6 @@ const Stack = createStackNavigator();
 function MyStack() {
 
   return (
-
     <Stack.Navigator>
       <Stack.Screen
         name="HomeScreen"
@@ -25,7 +24,6 @@ function MyStack() {
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
-
   );
 }
 function App() {

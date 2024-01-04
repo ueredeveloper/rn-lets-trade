@@ -15,7 +15,7 @@ const ListCurrencies = ({ currencies, navigation }) => {
     const renderInfoCurrencyAndAccordionChart = ({ item }) => (
         <>
             <InfoCurrency navigation={navigation} currency={item} collections={collections} />
-            <CustomAnimatedAccordion symbol={item.symbol} />
+            <CustomAnimatedAccordion navigation={navigation} currency={item} collections={collections} />
         </>);
 
     return (

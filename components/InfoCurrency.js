@@ -15,7 +15,7 @@ const InfoCurrency = ({ navigation, currency, collections }) => {
                 <Text style={styles.text}> {currency.symbol}</Text>
                 <Text style={styles.text}> {currency.price}</Text>
             </View>
-            <CurrencyCollection currency={currency} collections={collections} />
+            
         </View>
     );
 };
