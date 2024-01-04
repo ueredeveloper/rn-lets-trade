@@ -1,13 +1,13 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const WebAnalyticsButton = ({ navigation, pair }) => {
+const WebAnalyticsButton = ({ navigation, symbol }) => {
 
   
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={() => {
-        navigation.navigate('BrowserScreen', { symbol: pair });
+        navigation.navigate('BrowserScreen', { symbol: symbol });
       }}>
         <View style={styles.buttonContent}>
           <Text style={styles.text}>Trading View</Text>

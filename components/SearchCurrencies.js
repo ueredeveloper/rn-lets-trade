@@ -5,11 +5,12 @@ import { OptionsCurrenciesContext } from '../context/OptionsCurrencyContext';
 
 function SearchCurrencies() {
 
+    //Currencies -> SearchCurrencies
     
     const [textInput, setTextInput] = useState('');
     const textInputRef = useRef();
 
-    const { filteredByQuotation, setFilteredCurrencies } = useContext(OptionsCurrenciesContext);
+    const { allCurrencies, setWhiteListCurrencies } = useContext(OptionsCurrenciesContext);
 
     const onPress = () => {
         console.log('pressed button', textInput)
@@ -20,20 +21,20 @@ function SearchCurrencies() {
         const textToUpper = text.toUpperCase();
         setTextInput(textToUpper);
         //setSearchCurrencies(textToUpper)
-        const filtered = filteredByQuotation.list.filter((currency) => {
-            return currency.pair.toLowerCase().includes(text.toLowerCase())
+        const filtered = allCurrencies.filter((currency) => {
+            return currency.symbol.toLowerCase().includes(text.toLowerCase())
         }
         );
-        setFilteredCurrencies(filtered);
+        setWhiteListCurrencies(filtered);
 
     };
 
     const handleOnPress = () => {
-        const filtered = filteredByQuotation.list.filter((currency) => {
-            return currency.pair.toLowerCase().includes(textInput.toLowerCase())
+        const filtered = allCurrencies.filter((currency) => {
+            return currency.symbol.toLowerCase().includes(textInput.toLowerCase())
         }
         );
-        setFilteredCurrencies(filtered);
+        setWhiteListCurrencies(filtered);
     }
 
 

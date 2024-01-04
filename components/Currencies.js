@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, Text } from 'react-native';
-import FlatListCoins from './FlatListCoins';
+import FlatListCoins from './ListCurrencies';
 import SearchCurrencies from './SearchCurrencies';
 import Intervals from './Intervals'
 import QuoteCurrencies from './QuoteCurrencies';
@@ -9,19 +9,20 @@ import IndicatorsCurrencies from './IndicatorsCurrencies';
 
 const Currencies = ({ navigation }) => {
 
-  
+  // HomeScreen -> Currencies
+
   const [loading, setLoading] = useState(true);
-  const { filteredCurrencies } = useContext(OptionsCurrenciesContext);
+  const { whiteListCurrencies } = useContext(OptionsCurrenciesContext);
 
   useEffect(() => {
-    if (filteredCurrencies) {
+    if (whiteListCurrencies) {
       setLoading(false)
     }
   }, []);
 
   return (
     <SafeAreaView style={styles.container}>
-
+       {/*console.log('currencies render')*/}
       <SearchCurrencies />
       <Intervals />
       <QuoteCurrencies />
@@ -31,7 +32,7 @@ const Currencies = ({ navigation }) => {
         <Text>Loading...</Text>
       ) : (
 
-        <FlatListCoins listCoins={filteredCurrencies} navigation={navigation} />
+        <FlatListCoins currencies={whiteListCurrencies} navigation={navigation} />
 
       )}
 

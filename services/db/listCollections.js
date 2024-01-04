@@ -1,10 +1,10 @@
 import { NHOST_ADMIN_SECRET } from "@env";
 
-const listCurrencies = async () => {
-  
+const listCollections = async () => {
+
   try {
     let response = await fetch(
-      'https://rndhdcgyemijvebfqipo.hasura.sa-east-1.nhost.run/api/rest/currency',
+      'https://rndhdcgyemijvebfqipo.hasura.sa-east-1.nhost.run/api/rest/collection',
       {
         method: 'GET',
         headers: {
@@ -13,7 +13,7 @@ const listCurrencies = async () => {
         },
       }
     );
-    
+
     if (!response.ok) {
       throw new Error('Network response was not ok.');
     }
@@ -30,4 +30,5 @@ const listCurrencies = async () => {
   }
 };
 
-export default listCurrencies;
+export default listCollections;
+

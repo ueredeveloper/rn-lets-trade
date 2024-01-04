@@ -1,13 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
-import { OptionsCurrenciesContext } from '../context/OptionsCurrencyContext'; // Import the context
-import QuoteCurrencies from "./QuoteCurrencies";
+import { OptionsCurrenciesContext } from '../context/OptionsCurrencyContext'; 
 import { fetchCandles } from "../services/fetchCandles";
 import { calculateBollingerBands } from "../utilities/calculateBollingerBands";
 import { calculateRecentCandles } from "../utilities/calculateRecenteCandles";
 import { sortByBollingersLowerAndCandlesClose } from "../utilities/sortByBollingersLowerAndCandlesClose";
 
 const IndicatorsCurrencies = () => {
+
+    // Currencides -> IncatorCurrencies
 
     const [indicatorsCurrencies, setIndicatorsCurrencies] = useState([
         { name: 'Bolllinger Bands', checked: false, },
@@ -17,7 +18,7 @@ const IndicatorsCurrencies = () => {
         { name: 'MacD', checked: false, },
     ])
 
-    const { filteredCurrencies, setFilteredCurrencies, intervals } = useContext(OptionsCurrenciesContext);
+    const { whiteListCurrencies, setWhiteListCurrencies, intervals } = useContext(OptionsCurrenciesContext);
 
     const [interval, setInterval] = useState('1d');
 
@@ -52,13 +53,13 @@ const IndicatorsCurrencies = () => {
             (async () => {
                 try {
                     // Moedas a serem buscadas
-                    const coinsToFetch = filteredCurrencies;
+                    const coinsToFetch = whiteListCurrencies;
 
                     /*binanceCurrencies.filter(coin => {
                       const checked = quoteCurrencies.filter(qc => qc.checked);
-                      return checked.some(crypto => coin.pair.endsWith(crypto.name));
+                      return checked.some(crypto => coin.symbol.endsWith(crypto.name));
                     });*/
-                    //ex: [{"pair": "BTCUSDT", "price": "43663.64000000"},]
+                    //ex: [{"symbol": "BTCUSDT", "price": "43663.64000000"},]
                     const fetchedCoins = [];
 
                     // Itera sobre as moedas para buscar informações
@@ -67,11 +68,11 @@ const IndicatorsCurrencies = () => {
                         // Busca as velas (candles) para cada moeda
                         const updatedCoins = await Promise.all(
                             chunk.map(async coin => {
-                                //ex: coin => {"pair": "CELOUSDT", "price": "0.69000000"}
+                                //ex: coin => {"symbol": "CELOUSDT", "price": "0.69000000"}
 
 
                                 // ex: fetchCandles ('ETHDOWNUSDT', 46, '1d')
-                                const fetchedCandles = await fetchCandles(coin.pair, 46, interval);
+                                const fetchedCandles = await fetchCandles(coin.symbol, 46, interval);
                                 // return fetchedCandles -> [{"baseAssetVolume": ".0", "close": "0.", "quoteVolume": "0", "trades": 0, "volume": ""}, {"baseAssetVolume": ...]
                                 const bollingerBands = calculateBollingerBands(20, fetchedCandles);
                                 // return -> bollingerBands -> {"lower": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,...}
@@ -80,7 +81,7 @@ const IndicatorsCurrencies = () => {
                                 const candles = calculateRecentCandles(bollingerBands.upper.length, fetchedCandles);
                                 //ex: candles -> [{"baseAssetVolume": "4022022447.0", "close": "0.0", "closeTime": 0, "high": 
 
-                                // return ->  {"pair": "BTTUSDT", "price": "0.00277700"} {"lower": 
+                                // return ->  {"symbol": "BTTUSDT", "price": "0.00277700"} {"lower": 
                                 return { ...coin, bollingerBands, candles };
                             })
                         );
@@ -91,7 +92,7 @@ const IndicatorsCurrencies = () => {
 
                         // Adiciona as moedas atualizadas ao estado utilizando push
                         //setListFilteredByIndicator(sortedCoins);
-                        setFilteredCurrencies(sortedCoins)
+                        setWhiteListCurrencies(sortedCoins)
 
                         if (i + 50 < coinsToFetch.length) {
                             // Aguarda 1 segundo antes de fazer a próxima requisição

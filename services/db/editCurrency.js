@@ -35,4 +35,4 @@ const editCurrency = async (currency) => {
     }
 };
 
-export { editCurrency }
+export default editCurrency;

@@ -1,10 +1,10 @@
 import { NHOST_ADMIN_SECRET } from "@env";
 
-const listCurrencies = async () => {
-  
+const searchCurrencyBySymbol = async (symbol) => {
+
   try {
     let response = await fetch(
-      'https://rndhdcgyemijvebfqipo.hasura.sa-east-1.nhost.run/api/rest/currency',
+      `https://rndhdcgyemijvebfqipo.hasura.sa-east-1.nhost.run/api/rest/currency-by-symbol/${symbol}`,
       {
         method: 'GET',
         headers: {
@@ -30,4 +30,4 @@ const listCurrencies = async () => {
   }
 };
 
-export default listCurrencies;
+export default searchCurrencyBySymbol;

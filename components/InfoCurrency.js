@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, ScrollView } from 'react-native';
-import { BlackListButton, BollingerBandsButton, FavoritesButton, WebAnalyticsButton } from './buttons'
+
+import CurrencyCollection from './CurrencyCollections';
 
 
-const CoinInfo = ({ navigation, pair, price }) => {
+const InfoCurrency = ({ navigation, currency, collections }) => {
+
+    // ListCurrencies -> InfoCurrency
+
     return (
         <View style={styles.container}>
+             {/*console.log('info currency render')*/}
             <View style={styles.content}>
-                <Text style={styles.text}> {pair}</Text>
-                <Text style={styles.text}> {price}</Text>
+                <Text style={styles.text}> {currency.symbol}</Text>
+                <Text style={styles.text}> {currency.price}</Text>
             </View>
-            <ScrollView horizontal={true}>
-                <BollingerBandsButton />
-                <FavoritesButton pair={pair} />
-                <BlackListButton pair={pair} />
-                <WebAnalyticsButton navigation={navigation} pair={pair} />
-            </ScrollView>
+            <CurrencyCollection currency={currency} collections={collections} />
         </View>
     );
 };
@@ -45,4 +45,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default CoinInfo;
+export default InfoCurrency;

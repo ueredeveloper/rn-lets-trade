@@ -5,7 +5,9 @@ import { OptionsCurrenciesContext } from "../context/OptionsCurrencyContext";
 /** Moeda de cotação */
 const QuoteCurrencies = () => {
 
-    const { binanceCurrencies, setFilteredByQuotation, setFilteredCurrencies } = useContext(OptionsCurrenciesContext);
+    // Currencies -> QuoteCurrencies
+
+    const { allCurrencies, setQuotationCurrencies, setWhiteListCurrencies } = useContext(OptionsCurrenciesContext);
 
     const [quoteCurrencies, setQuoteCurrencies] = useState([
         { name: 'USDT', checked: true },
@@ -31,15 +33,12 @@ const QuoteCurrencies = () => {
             })
         );
 
-        let filtered = binanceCurrencies.filter(currency => {
-            return currency.pair.endsWith(quote)
+        let filtered = allCurrencies.filter(currency => {
+            return currency.symbol.endsWith(quote)
         });
 
-        setFilteredByQuotation({
-            quote: quote,
-            list: filtered
-        });
-        setFilteredCurrencies(filtered);
+        setQuotationCurrencies(filtered);
+        setWhiteListCurrencies(filtered);
     }
 
     return (

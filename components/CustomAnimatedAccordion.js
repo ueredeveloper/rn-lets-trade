@@ -1,17 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import {
-    View,
-    StyleSheet,
-    TouchableOpacity,
-    Animated,
-    Text,
-} from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import BBLineChart from './BBLineChart';
 import { OptionsCurrenciesContext } from '../context/OptionsCurrencyContext';
-import { CandlestickBandsChart } from './CandlestickBandsChart';
+import { BollingerBandsChart } from './BollingerBandsChart';
 
 const CustomAnimatedAccordion = ({ symbol }) => {
+
+    // ListCurrencies -> CustomAnimatedAccordion
 
     const [expanded, setExpanded] = useState(false);
     const [animation, setAnimation] = useState(new Animated.Value(0));
@@ -46,10 +41,10 @@ const CustomAnimatedAccordion = ({ symbol }) => {
         overflow: 'hidden',
     };
 
-    
+
     const { intervals } = useContext(OptionsCurrenciesContext);
 
-    const [interval, setInterval] = useState('1d');
+    const [interval, setInterval] = useState('8h');
     useEffect(() => {
         let interval = intervals.find(i => i.checked === true);
         setInterval(interval.name);
@@ -60,7 +55,6 @@ const CustomAnimatedAccordion = ({ symbol }) => {
             <TouchableOpacity style={styles.button} onPress={toggleAccordion}>
                 <View>
                     <Ionicons
-                    
                         name={expanded ? 'caret-up-outline' : 'caret-down-outline'}
                         size={20}
                         style={styles.icon}
@@ -69,7 +63,7 @@ const CustomAnimatedAccordion = ({ symbol }) => {
             </TouchableOpacity>
             {expanded ? (
                 <Animated.View style={[styles.content, animatedStyle]}>
-                    <CandlestickBandsChart symbol={symbol} interval={interval} />
+                    <BollingerBandsChart symbol={symbol} interval={interval} />
                 </Animated.View>
 
             ) : (<View></View>)}

@@ -12,7 +12,9 @@ echarts.use([SVGRenderer]);
 const E_HEIGHT = 400;
 const E_WIDTH = Dimensions.get('window').width;
 
-function CandlestickBandsChart({ symbol, interval }) {
+function BollingerBandsChart({ symbol, interval }) {
+
+  //CustomAnimatedAccordion -> BollingerBandsChart
 
   // cor dos candles (compra e venda)
   const upColor = '#00da3c';
@@ -23,6 +25,7 @@ function CandlestickBandsChart({ symbol, interval }) {
   const skiaRef = useRef(null);
 
   const [chartData, setChartData] = useState({
+    
     labels: ['', '', '', '', '', ''],
     candles: [{ open: 0 }, { close: 0 }, { high: 0 }, { low: 0 }],
     bollingerBands: {
@@ -265,4 +268,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { CandlestickBandsChart }
+export { BollingerBandsChart }

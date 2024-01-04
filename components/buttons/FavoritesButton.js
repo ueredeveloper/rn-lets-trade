@@ -4,12 +4,9 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { OptionsCurrenciesContext } from '../../context/OptionsCurrencyContext';
 import { editCurrency, insertCurrency } from '../../services/db';
 
-const FavoritesButton = ({ pair }) => {
+const FavoritesButton = ({ symbol }) => {
 
-
-  
   const { dataBaseCurrencies, setDataBaseCurrencies, filteredCurrencies,  setFilteredCurrencies } = useContext(OptionsCurrenciesContext);
-
 
   const [currency, setCurrency] = useState({
     object: {
@@ -21,7 +18,7 @@ const FavoritesButton = ({ pair }) => {
 
   useEffect(() => {
 
-    const foundCurrency = dataBaseCurrencies.find(c => pair === c.symbol);
+    const foundCurrency = dataBaseCurrencies.find(c => symbol === c.symbol);
 
     if (foundCurrency) {
       setCurrency(prev => {
@@ -70,7 +67,7 @@ const FavoritesButton = ({ pair }) => {
         }
       });
     } else {
-      insertCurrency({ object: { symbol: pair, is_favorite: _isFavorite } }).then(
+      insertCurrency({ object: { symbol: symbol, is_favorite: _isFavorite } }).then(
         response => {
           //{"insert_currency_one": {"family_id": null, "id": 73, "is_blacklisted": true, "is_favorite": null, "symbol": "CITYUSDT"}}, "status": 200}
           if (response.status === 200) {
@@ -78,7 +75,7 @@ const FavoritesButton = ({ pair }) => {
             setDataBaseCurrencies(prevState => {
               return [...prevState, obj]
             });
-           // let isWhiteListed = filteredCurrencies.list.filter(c => c.pair !== obj.symbol);
+           // let isWhiteListed = filteredCurrencies.list.filter(c => c.symbol !== obj.symbol);
 
            // setFilteredCurrencies(isWhiteListed)
           }

@@ -5,6 +5,8 @@ import { OptionsCurrenciesContext } from '../context/OptionsCurrencyContext'; //
 
 const Intervals = () => {
 
+    // Currencies -> Intervals
+
     const { intervals, setIntervals } = useContext(OptionsCurrenciesContext);
 
     return (

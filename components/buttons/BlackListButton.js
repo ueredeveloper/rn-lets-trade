@@ -4,7 +4,7 @@ import { useContext, useState, useEffect } from 'react';
 import { OptionsCurrenciesContext } from '../../context/OptionsCurrencyContext';
 import { editCurrency, insertCurrency, listCurrencies } from '../../services/db';
 
-const BlackListButton = ({ pair }) => {
+const BlackListButton = ({ symbol }) => {
 
   const { dataBaseCurrencies, setDataBaseCurrencies, filteredCurrencies,  setFilteredCurrencies } = useContext(OptionsCurrenciesContext);
 
@@ -17,7 +17,7 @@ const BlackListButton = ({ pair }) => {
   });
 
   useEffect(() => {
-    const foundCurrency = dataBaseCurrencies.find(c => c.symbol === pair);
+    const foundCurrency = dataBaseCurrencies.find(c => c.symbol === symbol);
     if (foundCurrency) {
       setCurrency(prev => {
         return {
@@ -63,14 +63,14 @@ const BlackListButton = ({ pair }) => {
             });
           });
 
-          let isWhiteListed = filteredCurrencies.filter(c => c.pair !== obj.symbol);
+          let isWhiteListed = filteredCurrencies.filter(c => c.symbol !== obj.symbol);
 
           setFilteredCurrencies(isWhiteListed)
         }
       });
 
     } else {
-      insertCurrency({ object: { symbol: pair, is_blacklisted: _isBlacklisted } }).then(
+      insertCurrency({ object: { symbol: symbol, is_blacklisted: _isBlacklisted } }).then(
         response => {
           //{"insert_currency_one": {"family_id": null, "id": 73, "is_blacklisted": true, "is_favorite": null, "symbol": "CITYUSDT"}}, "status": 200}
           if (response.status === 200) {
@@ -78,7 +78,7 @@ const BlackListButton = ({ pair }) => {
             setDataBaseCurrencies(prevState => {
               return [...prevState, obj]
             });
-            let isWhiteListed = filteredCurrencies.filter(c => c.pair !== obj.symbol);
+            let isWhiteListed = filteredCurrencies.filter(c => c.symbol !== obj.symbol);
 
             setFilteredCurrencies(isWhiteListed)
           }

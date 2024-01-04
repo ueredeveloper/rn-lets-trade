@@ -1,10 +1,12 @@
 import { NHOST_ADMIN_SECRET } from "@env";
 
-const listCurrencies = async () => {
-  
+const searchCurrencyCollection = async (collection, currency) => {
+console.log('search c c ', collection.id, currency.id)
+    let collectionId = collection.id;
+    let currencyId = currency.id
   try {
     let response = await fetch(
-      'https://rndhdcgyemijvebfqipo.hasura.sa-east-1.nhost.run/api/rest/currency',
+      `https://rndhdcgyemijvebfqipo.hasura.sa-east-1.nhost.run/api/rest/by_collection_and_currency/${collectionId}/${currencyId}`,
       {
         method: 'GET',
         headers: {
@@ -30,4 +32,4 @@ const listCurrencies = async () => {
   }
 };
 
-export default listCurrencies;
+export default searchCurrencyCollection;

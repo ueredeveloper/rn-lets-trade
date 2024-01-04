@@ -9,6 +9,9 @@ import { getCoinPosts } from '../services/fetchPosts';
 
 
 const BrowserScreen = ({ route, navigation }) => {
+
+    // App -> BrowserScreen
+
     const { symbol } = route.params;
 
     const [published_url, setPublished_Url] = useState('');
@@ -52,6 +55,7 @@ const BrowserScreen = ({ route, navigation }) => {
 
     return (
         <View style={styles.container}>
+            {/*console.log('browser render')*/}
             <View style={styles.view_webview}>
                 <WebView style={styles.webview} source={{ uri: published_url }} />
             </View>

@@ -30,4 +30,4 @@ const insertCurrency = async (currency) => {
   }
 };
 
-export { insertCurrency }
+export default insertCurrency;

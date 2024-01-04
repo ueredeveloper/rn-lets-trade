@@ -1,5 +1,5 @@
 import Currencies from "./Currencies";
-import SettingsView from "./SettingsView";
+import SettingsView from "../screens/SettingsScreen";
 
 
 export {Currencies, SettingsView}

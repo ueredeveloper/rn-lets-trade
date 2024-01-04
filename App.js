@@ -13,7 +13,6 @@ function MyStack() {
     <Stack.Navigator>
       <Stack.Screen
         name="HomeScreen"
-
         children={props => (
           <OptionsCurrenciesProvider>
             <HomeScreen {...props} />
